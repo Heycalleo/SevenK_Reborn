@@ -1,4 +1,4 @@
-:root {
+ton:root {
   --bg: #f0f6ff;
   --surface: #ffffff;
   --surface-soft: #eef7ff;
@@ -1067,6 +1067,17 @@ body { background: linear-gradient(160deg, #ffffff 0%, #f4faff 48%, #e8f4fb 100%
 .subject-list li { counter-increment: subjects; display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0; color: var(--text); font-weight: 500; }
 .subject-list li::before { content: '0' counter(subjects); color: var(--primary); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; }
 .schedule-note { max-width: 850px; margin: 1rem 0 0; color: var(--muted); font-size: 0.88rem; }
+
+/* Jadwal Piket: daftar nama anggota per hari. */
+.piket-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; max-width: 850px; }
+.picket-list { list-style: none; margin: 0; padding: 0.75rem 1.2rem 1.15rem; counter-reset: picket; }
+.picket-list li { counter-increment: picket; display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0; color: var(--text); font-weight: 500; }
+.picket-list li::before { content: '#' counter(picket); color: var(--primary); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; }
+.picket-list li:hover { color: var(--primary); }
+@media (max-width: 720px) {
+  .piket-grid { grid-template-columns: 1fr; gap: 0.8rem; }
+  .picket-list { padding: 0.65rem 1.05rem 0.95rem; }
+}
 
 @media (max-width: 720px) {
   .schedule-grid { grid-template-columns: 1fr; gap: 0.8rem; }

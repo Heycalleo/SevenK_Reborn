@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Piket Kelas - Seven K</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Animasi masuk halus untuk kartu hari & nama anggota */
+    .piket-card {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: card-in 520ms cubic-bezier(.22,.8,.3,1) forwards;
+    }
+    .picket-list li {
+      opacity: 0;
+      transform: translateX(12px);
+      animation: name-in 400ms cubic-bezier(.22,.8,.3,1) forwards;
+    }
+    @keyframes card-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes name-in {
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div>
+          <h1>Class Seven K</h1>
+          <p>Jadwal Piket — giliran kebersihan kelas.</p>
+        </div>
+      </div>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">☰</button>
+      <div class="nav-pill">
+        <nav class="site-nav" id="siteNav" aria-label="Navigasi utama">
+          <a href="index.html">Beranda</a>
+          <a href="structure.html">Struktur</a>
+          <a href="schedule.html">Jadwal</a>
+          <a href="Piket.html">Piket</a>
+          <a href="index.html#gallery">Galeri</a>
+          <a href="sosmed.html">Sosmed</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow">Kebersihan kelas</p>
+        <h3>Jadwal Piket</h3>
+        <p class="section-intro">Siapa ngerjain hari ini, jangan sampai kelas kotor ya. Cek giliran piketmu sebelum berangkat!</p>
+
+        <div class="schedule-grid piket-grid">
+          <!-- Isi nama anggota piket untuk tiap hari di bawah ini -->
+          <article class="schedule-card piket-card" style="animation-delay:0ms">
+            <div class="schedule-day"><span>Senin</span><small>Kebersihan awal pekan</small></div>
+            <ul class="picket-list">
+              <li style="animation-delay:60ms">Nama Siswa 1</li>
+              <li style="animation-delay:120ms">Nama Siswa 2</li>
+              <li style="animation-delay:180ms">Nama Siswa 3</li>
+              <li style="animation-delay:240ms">Nama Siswa 4</li>
+            </ul>
+          </article>
+
+          <article class="schedule-card piket-card" style="animation-delay:90ms">
+            <div class="schedule-day"><span>Selasa</span><small>Jaga tetap rapi</small></div>
+            <ul class="picket-list">
+              <li style="animation-delay:150ms">Nama Siswa 1</li>
+              <li style="animation-delay:210ms">Nama Siswa 2</li>
+              <li style="animation-delay:270ms">Nama Siswa 3</li>
+              <li style="animation-delay:330ms">Nama Siswa 4</li>
+            </ul>
+          </article>
+
+          <article class="schedule-card piket-card" style="animation-delay:180ms">
+            <div class="schedule-day"><span>Rabu</span><small>Hampir tengah minggu</small></div>
+            <ul class="picket-list">
+              <li style="animation-delay:240ms">Nama Siswa 1</li>
+              <li style="animation-delay:300ms">Nama Siswa 2</li>
+              <li style="animation-delay:360ms">Nama Siswa 3</li>
+              <li style="animation-delay:420ms">Nama Siswa 4</li>
+            </ul>
+          </article>
+
+          <article class="schedule-card piket-card" style="animation-delay:270ms">
+            <div class="schedule-day"><span>Kamis</span><small>Stay bersih</small></div>
+            <ul class="picket-list">
+              <li style="animation-delay:330ms">Nama Siswa 1</li>
+              <li style="animation-delay:390ms">Nama Siswa 2</li>
+              <li style="animation-delay:450ms">Nama Siswa 3</li>
+              <li style="animation-delay:510ms">Nama Siswa 4</li>
+            </ul>
+          </article>
+
+          <article class="schedule-card piket-card" style="animation-delay:360ms">
+            <div class="schedule-day"><span>Jumat</span><small>Bersih-bersih terakhir</small></div>
+            <ul class="picket-list">
+              <li style="animation-delay:420ms">Nama Siswa 1</li>
+              <li style="animation-delay:480ms">Nama Siswa 2</li>
+              <li style="animation-delay:540ms">Nama Siswa 3</li>
+              <li style="animation-delay:600ms">Nama Siswa 4</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-class">Seven K</p>
+      <p class="footer-message">Satu kelas, banyak cerita, dan kenangan yang tetap pulang bersama.</p>
+      <p class="footer-copy">Made with love by Seven K · <span data-current-year></span></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
