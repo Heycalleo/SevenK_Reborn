@@ -36,12 +36,23 @@ function setupScrollEffects() {
   progress.setAttribute('aria-hidden', 'true');
   document.body.appendChild(progress);
 
+  const backToTop = document.createElement('button');
+  backToTop.className = 'back-to-top';
+  backToTop.type = 'button';
+  backToTop.setAttribute('aria-label', 'Kembali ke atas');
+  backToTop.innerHTML = '<span aria-hidden="true">↑</span>';
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.body.appendChild(backToTop);
+
   let ticking = false;
   const updateScrollEffects = () => {
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const progressValue = maxScroll > 0 ? window.scrollY / maxScroll : 0;
     progress.style.transform = `scaleX(${Math.min(Math.max(progressValue, 0), 1)})`;
     document.body.classList.toggle('has-scrolled', window.scrollY > 18);
+    backToTop.classList.toggle('is-visible', window.scrollY > 420);
     ticking = false;
   };
 
@@ -206,6 +217,9 @@ document.querySelectorAll('.site-nav a').forEach((link) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-current-year]').forEach((year) => {
+    year.textContent = String(new Date().getFullYear());
+  });
   setupScrollReveal();
   setupScrollEffects();
   animateStats();
