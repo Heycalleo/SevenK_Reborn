@@ -275,6 +275,54 @@ img {
   gap: 1rem;
 }
 
+.social-card {
+  display: inline-flex;
+  min-width: 220px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(11, 102, 208, 0.12);
+  box-shadow: 0 20px 40px rgba(11, 102, 208, 0.08);
+  padding: 0.9rem 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.social-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.social-card:hover,
+.social-card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 26px 48px rgba(11, 102, 208, 0.14);
+  background: #f6fbff;
+}
+
+.social-icon {
+  display: inline-flex;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  background: #fe2c55;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.social-text {
+  display: block;
+  font-size: 0.96rem;
+}
+
+.tiktok-card {
+  border-color: rgba(254, 44, 85, 0.18);
+}
+
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -1531,7 +1579,7 @@ body.has-scrolled .site-header { background: rgba(252, 254, 255, 0.96); box-shad
 .social-button { background: #e1f1f9; color: #376d8d; box-shadow: 0 4px 0 #b8dbe9; }
 .social-button:hover, .social-button:focus-visible { box-shadow: 0 2px 0 #b8dbe9; }
 .social-page { min-height: 70vh; }
-.official-social-card { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin-top: 2rem; padding: 1.6rem; border: 1px solid #b9ddeb; border-radius: 20px 20px 8px 20px; background: linear-gradient(135deg, #fafeff, #e5f3fa); box-shadow: 0 14px 30px rgba(76, 140, 174, 0.1); }
+.official-social-card { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin-top: 2rem; padding: 1.6rem; border: 1px solid #b9ddeb; border-radius: 20px 20px 8px 20px; background: linear-gradient(135deg, #fafeff, #e5f3fa); box-shadow: 0 14px 30px rgba(76, 140, 174, 0.1); animation: fadeInUp 0.8s ease both; }
 .official-social-card h4, .student-social-heading h4 { margin: 0.2rem 0; color: #3c6e8a; font-size: 1.28rem; }
 .official-social-card p { margin: 0; color: #718d9f; font-size: 0.9rem; }
 .social-kicker { margin: 0; color: #75a9c4; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -1541,7 +1589,8 @@ body.has-scrolled .site-header { background: rgba(252, 254, 255, 0.96); box-shad
 .student-social-empty { grid-column: 1 / -1; padding: 2.2rem 1.4rem; border: 1px dashed #b9d9e9; border-radius: 18px; background: rgba(255,255,255,0.58); color: #7894a7; text-align: center; }
 .student-social-empty span { display: grid; width: 2rem; height: 2rem; place-items: center; margin: 0 auto 0.5rem; color: #78aecb; border-radius: 50%; background: #e5f3fa; }
 .student-social-empty p { max-width: 29rem; margin: 0 auto; font-size: 0.9rem; }
-.student-social-card { min-height: 6.4rem; padding: 1.15rem 1.25rem; border: 1px solid #dcecf4; border-radius: 18px 18px 18px 8px; background: rgba(255,255,255,0.86); box-shadow: 0 9px 18px rgba(76, 140, 174, 0.07); }
+.student-social-card { min-height: 6.4rem; padding: 1.15rem 1.25rem; border: 1px solid #dcecf4; border-radius: 18px 18px 18px 8px; background: rgba(255,255,255,0.86); box-shadow: 0 9px 18px rgba(76, 140, 174, 0.07); transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.3s ease; opacity: 0; transform: translateY(20px); animation: fadeInUp 0.8s ease forwards; }
+.student-social-card:hover, .student-social-card:focus-within { transform: translateY(-4px); box-shadow: 0 18px 32px rgba(76, 140, 174, 0.18); border-color: #b2d6ee; }
 .student-social-card h5 { margin: 0 0 0.5rem; color: #3e6d87; font-size: 1rem; }
 .student-social-card p { margin: 0; color: #76a0b6; font-size: 0.9rem; }
 .student-social-card:nth-child(2n) { border-radius: 18px 18px 8px 18px; }
