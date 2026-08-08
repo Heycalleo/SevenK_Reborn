@@ -931,24 +931,6 @@ code {
 
 .brand { gap: 0.65rem; }
 
-.brand-mark {
-  display: grid;
-  width: 2.55rem;
-  height: 2.55rem;
-  place-items: center;
-  flex: 0 0 auto;
-  color: #fdfbf7;
-  background: var(--primary);
-  border: 2px solid #fdfbf7;
-  border-radius: 46% 54% 48% 52% / 53% 44% 56% 47%;
-  box-shadow: 3px 3px 0 #d9ad62;
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-size: 0.86rem;
-  font-weight: 800;
-  letter-spacing: -0.06em;
-  transform: rotate(-4deg);
-}
-
 .brand h1 { letter-spacing: -0.045em; }
 .brand p { font-size: 0.76rem; }
 
@@ -985,52 +967,51 @@ code {
 .nav-pill .site-nav a[aria-current='page'] { color: var(--primary); }
 
 @media (max-width: 720px) {
-  .brand-mark { width: 2.35rem; height: 2.35rem; }
   .nav-pill .site-nav a::after { right: 1rem; bottom: 0.22rem; left: 1rem; }
   .nav-pill .site-nav a[aria-current='page'] { background: #e1eeea; }
 }
 
 /* Sedikit lebih santai: gaya catatan kelas, bukan kartu template yang seragam. */
 :root {
-  --bg: #f7f4ed;
-  --surface-soft: #edf4f1;
-  --text: #19373d;
-  --muted: #5d7475;
-  --primary: #277c86;
-  --accent: #66a9b1;
-  --accent-2: #d8ebe6;
-  --shadow: 0 14px 30px rgba(25, 55, 61, 0.10);
+  --bg: #f5faff;
+  --surface-soft: #eaf4fb;
+  --text: #23465f;
+  --muted: #628198;
+  --primary: #5797bf;
+  --accent: #a9d4e9;
+  --accent-2: #d9edf8;
+  --shadow: 0 14px 30px rgba(54, 116, 153, 0.12);
 }
 
-body { background: #f7f4ed; }
+body { background: linear-gradient(160deg, #ffffff 0%, #f4faff 48%, #e8f4fb 100%); }
 .site-header {
-  background: rgba(247, 244, 237, 0.94);
+  background: rgba(250, 253, 255, 0.94);
   backdrop-filter: blur(10px);
   border-bottom-color: rgba(25, 55, 61, 0.12);
   box-shadow: none;
 }
 .nav-pill { padding: 0; background: transparent; border: 0; box-shadow: none; }
 .nav-pill .site-nav a { padding: 0.55rem 0.75rem; border-radius: 8px; background: transparent; box-shadow: none; }
-.nav-pill .site-nav a:hover, .nav-pill .site-nav a:focus-visible { background: #e1eeea; border-color: transparent; box-shadow: none; }
+.nav-pill .site-nav a:hover, .nav-pill .site-nav a:focus-visible { background: #e8f4fb; border-color: transparent; box-shadow: none; }
 .hero { padding: 4.5rem 0 4rem; }
 .hero-bg {
-  background: radial-gradient(circle at 15% 30%, rgba(204, 229, 218, 0.55), transparent 24%), radial-gradient(circle at 85% 75%, rgba(242, 211, 157, 0.38), transparent 18%);
+  background: radial-gradient(circle at 15% 30%, rgba(174, 215, 238, 0.6), transparent 25%), radial-gradient(circle at 85% 75%, rgba(218, 238, 250, 0.72), transparent 20%);
 }
-.button { border-radius: 9px; background: var(--primary); box-shadow: 0 5px 0 #1c5b62; }
-.button:hover, .button:focus-visible { transform: translateY(2px); box-shadow: 0 3px 0 #1c5b62; }
-.button.secondary { background: #e1eeea; }
+.button { border-radius: 9px; background: var(--primary); box-shadow: 0 5px 0 #3d7fa7; }
+.button:hover, .button:focus-visible { transform: translateY(2px); box-shadow: 0 3px 0 #3d7fa7; }
+.button.secondary { background: #e8f4fb; }
 .quick-info-card, .stat-card { border-radius: 14px; box-shadow: var(--shadow); }
-.section-blue { background: #edf4f1; }
-.section-wave { background: #fdfbf7; }
+.section-blue { background: #eaf4fb; }
+.section-wave { background: #fbfdff; }
 .structure-card, .schedule-card, .gallery-card, .class-item { border-radius: 14px; box-shadow: var(--shadow); }
-.gallery-toggle { border-radius: 8px; background: #dcece7; }
+.gallery-toggle { border-radius: 8px; background: #dceef8; }
 .gallery-card img, .gallery-thumb { border-radius: 10px; }
 .site-footer { border-top: 1px solid rgba(25, 55, 61, 0.12); }
 
 /* Jadwal dibuat sebagai daftar urutan pelajaran supaya lebih mudah dipindai. */
 .schedule-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; max-width: 850px; }
 .schedule-card { position: relative; overflow: hidden; padding: 0; border: 1px solid rgba(25, 55, 61, 0.12); }
-.schedule-card::after { content: ''; position: absolute; width: 6rem; height: 6rem; right: -2.8rem; top: -2.8rem; border-radius: 50%; background: #dcece7; }
+.schedule-card::after { content: ''; position: absolute; width: 6rem; height: 6rem; right: -2.8rem; top: -2.8rem; border-radius: 50%; background: #dceef8; }
 .schedule-day { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: baseline; gap: 0.75rem; padding: 1.1rem 1.2rem 0.9rem; border-bottom: 1px dashed rgba(25, 55, 61, 0.16); }
 .schedule-day span { display: block; width: auto; height: auto; border-radius: 0; background: transparent; color: var(--text); font-family: 'Bricolage Grotesque', 'DM Sans', sans-serif; font-size: 1.35rem; font-weight: 700; }
 .schedule-day small { color: var(--muted); font-size: 0.74rem; }
@@ -1144,14 +1125,62 @@ body { background: #f7f4ed; }
 }
 
 /* Penyesuaian akhir navbar agar menang atas gaya halaman lainnya. */
-.site-header { background: rgba(247, 244, 237, 0.82); border-bottom: 0; box-shadow: 0 1px 0 rgba(25, 55, 61, 0.07); }
+.site-header { background: rgba(250, 253, 255, 0.82); border-bottom: 0; box-shadow: 0 1px 0 rgba(54, 116, 153, 0.09); }
 .header-inner { padding: 0.8rem 0; }
 .nav-pill .site-nav { gap: 0.12rem; }
 .nav-pill .site-nav a { padding: 0.55rem 0.72rem 0.62rem; color: rgba(25, 55, 61, 0.78); font-size: 0.88rem; font-weight: 700; }
 .nav-pill .site-nav a:hover, .nav-pill .site-nav a:focus-visible { color: var(--primary); background: transparent; }
 
+.scroll-progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 30;
+  width: 100%;
+  height: 3px;
+  pointer-events: none;
+  background: linear-gradient(90deg, #b9dff1, var(--primary), #d9edf8);
+  box-shadow: 0 1px 8px rgba(87, 151, 191, 0.3);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 80ms linear;
+}
+
+body.has-scrolled .site-header {
+  background: rgba(250, 253, 255, 0.96);
+  box-shadow: 0 8px 24px rgba(54, 116, 153, 0.1);
+}
+
 @media (max-width: 720px) {
   .header-inner { padding: 0.75rem 0; }
   .nav-pill .site-nav a { padding: 0.75rem 1rem; }
-  .nav-pill .site-nav a[aria-current='page'] { background: #e1eeea; }
+  .nav-pill .site-nav a[aria-current='page'] { background: #e8f4fb; }
+}
+
+/* Masuk pelan saat konten terlihat: terasa hidup di layar kecil maupun besar. */
+@media (prefers-reduced-motion: no-preference) {
+  .js-reveal {
+    opacity: 0;
+    transform: translateY(28px) rotate(0.45deg);
+    transition: opacity 620ms cubic-bezier(.22,.8,.3,1) var(--reveal-delay, 0ms),
+      transform 620ms cubic-bezier(.22,.8,.3,1) var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .js-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+
+  .gallery-card.is-visible:nth-child(3n + 1) { transform: translateY(0) rotate(-0.45deg); }
+  .gallery-card.is-visible:nth-child(3n) { transform: translateY(0) rotate(0.45deg); }
+
+  .button, .gallery-toggle, .menu-toggle {
+    transition: transform 180ms cubic-bezier(.2,.9,.3,1), box-shadow 180ms ease, background 180ms ease;
+  }
+
+  .button:active, .gallery-toggle:active, .menu-toggle:active { transform: scale(0.94); }
+}
+
+@media (max-width: 720px) and (prefers-reduced-motion: no-preference) {
+  .js-reveal { transform: translateY(18px); }
 }

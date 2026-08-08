@@ -2,6 +2,58 @@ const menuToggle = document.getElementById('menuToggle');
 const siteNav = document.getElementById('siteNav');
 const detailButtons = document.querySelectorAll('.detail-toggle');
 
+let revealObserver;
+
+function setupScrollReveal(scope = document) {
+  const items = scope.querySelectorAll('.section h3, .section-intro, .highlight-card, .structure-card, .schedule-card, .gallery-card, .site-footer .container');
+
+  if (!('IntersectionObserver' in window)) {
+    items.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  if (!revealObserver) {
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -28px' });
+  }
+
+  items.forEach((item, index) => {
+    if (item.classList.contains('js-reveal')) return;
+    item.classList.add('js-reveal');
+    item.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 70}ms`);
+    revealObserver.observe(item);
+  });
+}
+
+function setupScrollEffects() {
+  const progress = document.createElement('div');
+  progress.className = 'scroll-progress';
+  progress.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(progress);
+
+  let ticking = false;
+  const updateScrollEffects = () => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progressValue = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+    progress.style.transform = `scaleX(${Math.min(Math.max(progressValue, 0), 1)})`;
+    document.body.classList.toggle('has-scrolled', window.scrollY > 18);
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(updateScrollEffects);
+  }, { passive: true });
+
+  updateScrollEffects();
+}
+
 async function loadGallery() {
   const grid = document.getElementById('galleryGrid');
   if (!grid) return;
@@ -60,6 +112,8 @@ async function loadGallery() {
     card.appendChild(actions);
     grid.appendChild(card);
   });
+
+  setupScrollReveal(grid);
 }
 
 function openLightbox(src) {
@@ -152,6 +206,8 @@ document.querySelectorAll('.site-nav a').forEach((link) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+  setupScrollReveal();
+  setupScrollEffects();
   animateStats();
   loadGallery();
 
