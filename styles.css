@@ -598,6 +598,37 @@ h3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.gallery-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.gallery-header h3 {
+  margin-bottom: 0.5rem;
+}
+
+.gallery-toggle {
+  border: none;
+  background: rgba(11, 102, 208, 0.14);
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 0.9rem 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-toggle:hover,
+.gallery-toggle:focus-visible {
+  background: rgba(11, 102, 208, 0.22);
+}
+
+.gallery-grid.collapsed {
+  display: none;
+}
+
 .gallery-card {
   min-height: 220px;
   display: grid;

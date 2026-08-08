@@ -131,4 +131,15 @@ detailButtons.forEach((button) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadGallery();
+
+  const galleryToggle = document.getElementById('galleryToggle');
+  const galleryGrid = document.getElementById('galleryGrid');
+
+  galleryToggle?.addEventListener('click', () => {
+    if (!galleryGrid) return;
+
+    const collapsed = galleryGrid.classList.toggle('collapsed');
+    galleryToggle.textContent = collapsed ? 'Tampilkan' : 'Sembunyikan';
+    galleryToggle.setAttribute('aria-expanded', String(!collapsed));
+  });
 });
