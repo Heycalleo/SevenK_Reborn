@@ -231,12 +231,42 @@ img {
   line-height: 1.6;
 }
 
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(11, 102, 208, 0.16);
+  border-radius: 24px;
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 18px 30px rgba(11, 102, 208, 0.08);
+  display: grid;
+  gap: 0.35rem;
+  text-align: left;
+}
+
+.stat-number {
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 1.25rem;
   align-items: flex-start;
-  margin-top: 1.8rem;
+  margin-top: 1rem;
 }
 
 .hero-buttons {
@@ -884,4 +914,81 @@ code {
   .download-btn {
     width: 100%;
   }
+}
+
+/* Sedikit lebih santai: gaya catatan kelas, bukan kartu template yang seragam. */
+:root {
+  --bg: #f7f4ed;
+  --surface-soft: #edf4f1;
+  --text: #19373d;
+  --muted: #5d7475;
+  --primary: #277c86;
+  --accent: #66a9b1;
+  --accent-2: #d8ebe6;
+  --shadow: 0 14px 30px rgba(25, 55, 61, 0.10);
+}
+
+body { background: #f7f4ed; }
+.site-header {
+  background: rgba(247, 244, 237, 0.94);
+  backdrop-filter: blur(10px);
+  border-bottom-color: rgba(25, 55, 61, 0.12);
+  box-shadow: none;
+}
+.nav-pill { padding: 0; background: transparent; border: 0; box-shadow: none; }
+.nav-pill .site-nav a { padding: 0.55rem 0.75rem; border-radius: 8px; background: transparent; box-shadow: none; }
+.nav-pill .site-nav a:hover, .nav-pill .site-nav a:focus-visible { background: #e1eeea; border-color: transparent; box-shadow: none; }
+.hero { padding: 4.5rem 0 4rem; }
+.hero-bg {
+  background: radial-gradient(circle at 15% 30%, rgba(204, 229, 218, 0.55), transparent 24%), radial-gradient(circle at 85% 75%, rgba(242, 211, 157, 0.38), transparent 18%);
+}
+.button { border-radius: 9px; background: var(--primary); box-shadow: 0 5px 0 #1c5b62; }
+.button:hover, .button:focus-visible { transform: translateY(2px); box-shadow: 0 3px 0 #1c5b62; }
+.button.secondary { background: #e1eeea; }
+.quick-info-card, .stat-card { border-radius: 14px; box-shadow: var(--shadow); }
+.section-blue { background: #edf4f1; }
+.section-wave { background: #fdfbf7; }
+.structure-card, .schedule-card, .gallery-card, .class-item { border-radius: 14px; box-shadow: var(--shadow); }
+.gallery-toggle { border-radius: 8px; background: #dcece7; }
+.gallery-card img, .gallery-thumb { border-radius: 10px; }
+.site-footer { border-top: 1px solid rgba(25, 55, 61, 0.12); }
+
+/* Prioritas layar HP: ruang cukup, tombol enak disentuh, dan konten mudah discroll. */
+@media (max-width: 720px) {
+  html { scroll-padding-top: 5rem; }
+  body { line-height: 1.6; }
+  .container { width: min(100% - 1.5rem, 1120px); }
+  .header-inner { padding: 0.75rem 0; }
+  .brand h1 { font-size: 1rem; }
+  .brand p { font-size: 0.72rem; line-height: 1.35; max-width: 14rem; }
+  .menu-toggle { min-width: 44px; min-height: 44px; padding: 0.6rem; border-radius: 10px; }
+  .nav-pill .site-nav { border-top-color: rgba(25, 55, 61, 0.12); background: #fffdf8; border-radius: 0 0 12px 12px; box-shadow: var(--shadow); }
+  .nav-pill .site-nav a { min-height: 46px; padding: 0.75rem 1rem; border-radius: 0; background: transparent; }
+  .hero { padding: 3.25rem 0 3rem; }
+  .eyebrow { margin-bottom: 0.75rem; font-size: 0.7rem; }
+  h2 { font-size: clamp(2rem, 10vw, 2.7rem); line-height: 1.12; }
+  h3 { font-size: clamp(1.65rem, 8vw, 2rem); }
+  .hero-copy p, .section-intro { font-size: 0.96rem; }
+  .hero-stats { grid-template-columns: 1fr; margin-top: 1.35rem; gap: 0.75rem; }
+  .stat-card { padding: 1rem 1.1rem; }
+  .hero-actions { margin-top: 1.35rem; }
+  .hero-buttons { gap: 0.75rem; }
+  .button, .download-btn { min-height: 48px; padding: 0.8rem 1rem; }
+  .quick-info-card { padding: 1rem 1.1rem; }
+  .quick-info-card li { margin-bottom: 0.5rem; }
+  .section, .section-wave { padding: 3.25rem 0; }
+  .gallery-header { align-items: stretch; flex-direction: column; }
+  .gallery-toggle { align-self: flex-start; min-height: 44px; padding: 0.65rem 1rem; }
+  .schedule-grid, .structure-grid { gap: 0.9rem; margin-top: 1.35rem; }
+  .schedule-card, .structure-card, .class-item { padding: 1.2rem; }
+  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-top: 1.35rem; }
+  .gallery-card { min-height: 0; padding: 0.65rem; gap: 0.65rem; }
+  .gallery-card img, .gallery-thumb { width: 100%; height: 145px; max-height: none; object-fit: cover; }
+  .gallery-actions, .download-btn { width: 100%; }
+  .site-footer { padding: 2rem 0 2.5rem; }
+}
+
+@media (max-width: 390px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-card img, .gallery-thumb { height: 200px; }
 }

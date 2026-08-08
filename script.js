@@ -107,6 +107,33 @@ function openLightbox(src) {
   overlay.classList.add('open');
 }
 
+function animateStats() {
+  const numbers = document.querySelectorAll('.stat-number');
+  numbers.forEach((number) => {
+    const targetText = number.textContent?.trim() || '0';
+    const target = parseInt(targetText.replace(/[^0-9]/g, ''), 10);
+    if (Number.isNaN(target) || target <= 0) return;
+
+    const duration = 1000;
+    const start = performance.now();
+    const initial = 0;
+
+    const update = (time) => {
+      const elapsed = Math.min(time - start, duration);
+      const progress = elapsed / duration;
+      const current = Math.floor(initial + (target - initial) * progress);
+      number.textContent = `${current}` + (targetText.includes('%') ? '%' : '');
+      if (elapsed < duration) {
+        requestAnimationFrame(update);
+      } else {
+        number.textContent = targetText;
+      }
+    };
+
+    requestAnimationFrame(update);
+  });
+}
+
 menuToggle?.addEventListener('click', () => {
   siteNav?.classList.toggle('open');
 });
@@ -119,17 +146,8 @@ document.querySelectorAll('.site-nav a').forEach((link) => {
   });
 });
 
-detailButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const panel = button.nextElementSibling;
-    if (panel instanceof HTMLElement) {
-      panel.classList.toggle('open');
-      button.textContent = panel.classList.contains('open') ? 'Sembunyikan' : 'Detail';
-    }
-  });
-});
-
 document.addEventListener('DOMContentLoaded', () => {
+  animateStats();
   loadGallery();
 
   const galleryToggle = document.getElementById('galleryToggle');
@@ -141,5 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const collapsed = galleryGrid.classList.toggle('collapsed');
     galleryToggle.textContent = collapsed ? 'Tampilkan' : 'Sembunyikan';
     galleryToggle.setAttribute('aria-expanded', String(!collapsed));
+  });
+});
+
+detailButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const panel = button.nextElementSibling;
+    if (panel instanceof HTMLElement) {
+      panel.classList.toggle('open');
+      button.textContent = panel.classList.contains('open') ? 'Sembunyikan' : 'Detail';
+    }
   });
 });
