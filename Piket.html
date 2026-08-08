@@ -8,30 +8,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* Animasi masuk halus untuk kartu hari & nama anggota */
-    .piket-card {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: card-in 520ms cubic-bezier(.22,.8,.3,1) forwards;
-    }
-    .picket-list li {
-      opacity: 0;
-      transform: translateX(12px);
-      animation: name-in 400ms cubic-bezier(.22,.8,.3,1) forwards;
-    }
-    @keyframes card-in {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes name-in {
-      to { opacity: 1; transform: translateX(0); }
-    }
-  </style>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-<a href="index.html" class="brand" aria-label="Kembali ke beranda">
+      <a href="index.html" class="brand" aria-label="Kembali ke beranda">
         <div>
           <h1>Class Seven K</h1>
           <p>Jadwal Piket — giliran kebersihan kelas.</p>
@@ -59,57 +40,58 @@
         <p class="section-intro">Siapa ngerjain hari ini, jangan sampai kelas kotor ya. Cek giliran piketmu sebelum berangkat!</p>
 
         <div class="schedule-grid piket-grid">
-          <!-- Isi nama anggota piket untuk tiap hari di bawah ini -->
-          <article class="schedule-card piket-card" style="animation-delay:0ms">
+          <article class="schedule-card piket-card">
             <div class="schedule-day"><span>Senin</span><small>Kebersihan awal pekan</small></div>
             <ul class="picket-list">
-              <li style="animation-delay:60ms">Nama Siswa 1</li>
-              <li style="animation-delay:120ms">Nama Siswa 2</li>
-              <li style="animation-delay:180ms">Nama Siswa 3</li>
-              <li style="animation-delay:240ms">Nama Siswa 4</li>
+              <li>Nama Siswa 1</li>
+              <li>Nama Siswa 2</li>
+              <li>Nama Siswa 3</li>
+              <li>Nama Siswa 4</li>
             </ul>
           </article>
 
-          <article class="schedule-card piket-card" style="animation-delay:90ms">
+          <article class="schedule-card piket-card">
             <div class="schedule-day"><span>Selasa</span><small>Jaga tetap rapi</small></div>
             <ul class="picket-list">
-              <li style="animation-delay:150ms">Nama Siswa 1</li>
-              <li style="animation-delay:210ms">Nama Siswa 2</li>
-              <li style="animation-delay:270ms">Nama Siswa 3</li>
-              <li style="animation-delay:330ms">Nama Siswa 4</li>
+              <li>Nama Siswa 1</li>
+              <li>Nama Siswa 2</li>
+              <li>Nama Siswa 3</li>
+              <li>Nama Siswa 4</li>
             </ul>
           </article>
 
-          <article class="schedule-card piket-card" style="animation-delay:180ms">
+          <article class="schedule-card piket-card">
             <div class="schedule-day"><span>Rabu</span><small>Hampir tengah minggu</small></div>
             <ul class="picket-list">
-              <li style="animation-delay:240ms">Nama Siswa 1</li>
-              <li style="animation-delay:300ms">Nama Siswa 2</li>
-              <li style="animation-delay:360ms">Nama Siswa 3</li>
-              <li style="animation-delay:420ms">Nama Siswa 4</li>
+              <li>Nama Siswa 1</li>
+              <li>Nama Siswa 2</li>
+              <li>Nama Siswa 3</li>
+              <li>Nama Siswa 4</li>
             </ul>
           </article>
 
-          <article class="schedule-card piket-card" style="animation-delay:270ms">
+          <article class="schedule-card piket-card">
             <div class="schedule-day"><span>Kamis</span><small>Stay bersih</small></div>
             <ul class="picket-list">
-              <li style="animation-delay:330ms">Nama Siswa 1</li>
-              <li style="animation-delay:390ms">Nama Siswa 2</li>
-              <li style="animation-delay:450ms">Nama Siswa 3</li>
-              <li style="animation-delay:510ms">Nama Siswa 4</li>
+              <li>Nama Siswa 1</li>
+              <li>Nama Siswa 2</li>
+              <li>Nama Siswa 3</li>
+              <li>Nama Siswa 4</li>
             </ul>
           </article>
 
-          <article class="schedule-card piket-card" style="animation-delay:360ms">
+          <article class="schedule-card piket-card">
             <div class="schedule-day"><span>Jumat</span><small>Bersih-bersih terakhir</small></div>
             <ul class="picket-list">
-              <li style="animation-delay:420ms">Nama Siswa 1</li>
-              <li style="animation-delay:480ms">Nama Siswa 2</li>
-              <li style="animation-delay:540ms">Nama Siswa 3</li>
-              <li style="animation-delay:600ms">Nama Siswa 4</li>
+              <li>Nama Siswa 1</li>
+              <li>Nama Siswa 2</li>
+              <li>Nama Siswa 3</li>
+              <li>Nama Siswa 4</li>
             </ul>
           </article>
         </div>
+
+        <p class="schedule-note">Catatan: jadwal piket bisa berubah sesuai kesepakatan kelas. Ganti &ldquo;Nama Siswa&rdquo; dengan nama anggota yang bertugas tiap harinya.</p>
       </div>
     </section>
   </main>

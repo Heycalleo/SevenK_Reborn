@@ -1,4 +1,4 @@
-ton:root {
+:root {
   --bg: #f0f6ff;
   --surface: #ffffff;
   --surface-soft: #eef7ff;
@@ -1084,9 +1084,13 @@ body { background: linear-gradient(160deg, #ffffff 0%, #f4faff 48%, #e8f4fb 100%
 /* Jadwal Piket: daftar nama anggota per hari. */
 .piket-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; max-width: 850px; }
 .picket-list { list-style: none; margin: 0; padding: 0.75rem 1.2rem 1.15rem; counter-reset: picket; }
-.picket-list li { counter-increment: picket; display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0; color: var(--text); font-weight: 500; }
+.picket-list li { counter-increment: picket; display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0; color: var(--text); font-weight: 500; transition: color 180ms ease, transform 180ms ease; }
 .picket-list li::before { content: '#' counter(picket); color: var(--primary); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; }
-.picket-list li:hover { color: var(--primary); }
+.picket-list li:nth-child(n + 10)::before { content: '#' counter(picket); font-size: 0.62rem; }
+.schedule-card:hover .picket-list li { color: var(--primary); }
+.schedule-card:hover .picket-list li:nth-child(2) { transition-delay: 35ms; }
+.schedule-card:hover .picket-list li:nth-child(3) { transition-delay: 70ms; }
+.schedule-card:hover .picket-list li:nth-child(4) { transition-delay: 105ms; }
 @media (max-width: 720px) {
   .piket-grid { grid-template-columns: 1fr; gap: 0.8rem; }
   .picket-list { padding: 0.65rem 1.05rem 0.95rem; }
@@ -1668,4 +1672,57 @@ body {
   body { background-size: 11px 11px, 100% 100%; }
   .section h3 { margin-bottom: 0.65rem; }
   .section-intro { padding-left: 0.75rem; }
+}
+
+/* ===== Logo kecil gaya doodle di navbar ===== */
+.brand-badge {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 2.6rem;
+  height: 2.6rem;
+  place-items: center;
+  border-radius: 46% 54% 52% 48% / 52% 46% 54% 48%;
+  background: linear-gradient(145deg, #bcdcf0, #86b8d3);
+  color: #fff;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: -0.02em;
+  box-shadow: 0 6px 14px rgba(70, 128, 164, 0.22);
+  transform: rotate(-4deg);
+  transition: transform 220ms cubic-bezier(.2,.9,.3,1), box-shadow 220ms ease;
+}
+a.brand:hover .brand-badge,
+a.brand:focus-visible .brand-badge {
+  transform: rotate(3deg) scale(1.06);
+  box-shadow: 0 8px 18px rgba(70, 128, 164, 0.3);
+}
+
+/* Jadikan link navbar terasa seperti stiker yang ditempel, bukan tombol seragam. */
+.nav-pill .site-nav a {
+  border: 1px dashed transparent;
+  transition: background 180ms ease, color 180ms ease, transform 160ms ease, border-color 180ms ease;
+}
+.nav-pill .site-nav a:hover,
+.nav-pill .site-nav a[aria-current='page'] {
+  border-color: rgba(117, 169, 196, 0.45);
+}
+.nav-pill .site-nav a:nth-child(odd):hover { transform: translateY(-1px) rotate(-0.5deg); }
+.nav-pill .site-nav a:nth-child(even):hover { transform: translateY(-1px) rotate(0.5deg); }
+
+/* Header lebih hangat, tidak seperti bingkai kaku. */
+.site-header::after {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  content: '';
+  background: repeating-linear-gradient(90deg, rgba(117, 169, 196, 0.35) 0 6px, transparent 6px 12px);
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .brand-badge { width: 2.3rem; height: 2.3rem; font-size: 0.74rem; }
+  .nav-pill .site-nav.open { max-height: 260px; }
 }
