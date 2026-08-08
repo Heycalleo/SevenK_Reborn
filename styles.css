@@ -766,6 +766,23 @@ h3 {
   color: var(--muted);
 }
 
+.footer-note {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.footer-note a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.footer-note a:hover,
+.footer-note a:focus-visible {
+  text-decoration: underline;
+}
+
 code {
   background: rgba(79, 140, 204, 0.12);
   padding: 0.18rem 0.42rem;
