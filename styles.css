@@ -1625,6 +1625,58 @@ body.has-scrolled .site-header { background: rgba(252, 254, 255, 0.96); box-shad
   .location-card { grid-template-columns: 1fr; }
   .map-frame iframe { min-height: 300px; }
 }
+
+/* Kartu Website Resmi Sekolah */
+.school-website-card {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 1.2rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid rgba(93, 146, 204, 0.12);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 248, 255, 0.92));
+  box-shadow: 0 16px 36px rgba(49, 86, 108, 0.08);
+}
+.school-website-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #dceef8, #c3e2f4);
+  font-size: 1.5rem;
+  box-shadow: 0 6px 14px rgba(70, 128, 164, 0.16);
+}
+.school-website-text { flex: 1 1 auto; min-width: 0; }
+.school-website-kicker {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.school-website-text h4 { margin: 0; color: var(--text); font-size: 1.2rem; }
+.school-website-text p { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.9rem; line-height: 1.5; }
+.school-website-card .button { flex: 0 0 auto; padding: 0.7rem 1.2rem; border-radius: 12px; }
+
+@media (max-width: 720px) {
+  .school-website-card { flex-wrap: wrap; padding: 1.1rem 1.15rem; }
+  .school-website-card .button { width: 100%; justify-content: center; }
+}
+
+body.dark .school-website-card {
+  background: linear-gradient(180deg, var(--surface), #1a2b38);
+  border-color: rgba(140, 196, 232, 0.18);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+}
+body.dark .school-website-icon { background: linear-gradient(135deg, #2c4a5e, #5f9cc4); }
+body.dark .school-website-text h4 { color: #dcebf5; }
+body.dark .school-website-text p { color: #9db8ca; }
+body.dark .school-website-kicker { color: var(--primary); }
   .nav-pill .site-nav a::after { display: none; }
   .nav-pill .site-nav a[aria-current='page'] { color: #326b8d; border-color: #b5d9ea; background: #e5f3fa; }
   .nav-pill .site-nav a[aria-current='page']::before { background: #5797bf; box-shadow: 0 0 0 4px rgba(87, 151, 191, 0.12); }
