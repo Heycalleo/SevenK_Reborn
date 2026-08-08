@@ -94,6 +94,19 @@ img {
   animation: fadeInUp 0.8s ease both;
 }
 
+/* Brand sebagai link kembali ke beranda */
+a.brand {
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+a.brand:hover,
+a.brand:focus-visible {
+  opacity: 0.82;
+  transform: translateY(-1px);
+}
+
 .logo {
   display: inline-flex;
   width: 3.1rem;
