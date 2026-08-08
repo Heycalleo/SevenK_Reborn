@@ -35,21 +35,22 @@ async function loadGallery() {
 
   grid.innerHTML = '';
   items.forEach((src) => {
+    const resolvedSrc = src.startsWith('http') || src.startsWith('/') || src.startsWith('./') ? src : `images/${src}`;
     const card = document.createElement('div');
     card.className = 'gallery-card';
 
     const img = document.createElement('img');
-    img.src = src;
-    img.alt = 'Foto galeri kelas';
+    img.src = resolvedSrc;
+    img.alt = `Foto galeri kelas: ${src.split('/').pop()}`;
     img.loading = 'lazy';
     img.className = 'gallery-thumb';
-    img.addEventListener('click', () => openLightbox(src));
+    img.addEventListener('click', () => openLightbox(resolvedSrc));
 
     const actions = document.createElement('div');
     actions.className = 'gallery-actions';
 
     const download = document.createElement('a');
-    download.href = src;
+    download.href = resolvedSrc;
     download.download = src.split('/').pop();
     download.className = 'download-btn';
     download.textContent = 'Download';
