@@ -203,6 +203,33 @@ menuToggle?.addEventListener('click', () => {
   siteNav?.classList.toggle('open');
 });
 
+// Dark Mode
+const themeToggle = document.getElementById('themeToggle');
+const STORAGE_KEY = 'sevenk-theme';
+
+function applyTheme(dark) {
+  document.body.classList.toggle('dark', dark);
+  if (themeToggle) {
+    themeToggle.textContent = dark ? '☀️' : '🌙';
+    themeToggle.setAttribute('aria-pressed', String(dark));
+    themeToggle.setAttribute('aria-label', dark ? 'Ganti ke mode terang' : 'Ganti ke mode gelap');
+  }
+}
+
+function initTheme() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  const dark = saved === null ? window.matchMedia('(prefers-color-scheme: dark)').matches : saved === 'dark';
+  applyTheme(dark);
+}
+
+themeToggle?.addEventListener('click', () => {
+  const dark = document.body.classList.toggle('dark');
+  localStorage.setItem(STORAGE_KEY, dark ? 'dark' : 'light');
+  applyTheme(dark);
+});
+
+initTheme();
+
 document.querySelectorAll('.site-nav a').forEach((link) => {
   const linkUrl = new URL(link.href, window.location.href);
   const isHomeSection = window.location.pathname.endsWith('index.html') && linkUrl.hash === '#home';
