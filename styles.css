@@ -920,6 +920,76 @@ code {
   }
 }
 
+/* Navbar: rasa seperti identitas kelas, bukan sekadar deretan tautan. */
+.site-header {
+  background: rgba(247, 244, 237, 0.82);
+  border-bottom: 0;
+  box-shadow: 0 1px 0 rgba(25, 55, 61, 0.07);
+}
+
+.header-inner { padding: 0.8rem 0; }
+
+.brand { gap: 0.65rem; }
+
+.brand-mark {
+  display: grid;
+  width: 2.55rem;
+  height: 2.55rem;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #fdfbf7;
+  background: var(--primary);
+  border: 2px solid #fdfbf7;
+  border-radius: 46% 54% 48% 52% / 53% 44% 56% 47%;
+  box-shadow: 3px 3px 0 #d9ad62;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  transform: rotate(-4deg);
+}
+
+.brand h1 { letter-spacing: -0.045em; }
+.brand p { font-size: 0.76rem; }
+
+.nav-pill { position: relative; }
+.nav-pill .site-nav { gap: 0.12rem; }
+.nav-pill .site-nav a {
+  position: relative;
+  padding: 0.55rem 0.72rem 0.62rem;
+  color: rgba(25, 55, 61, 0.78);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.nav-pill .site-nav a::after {
+  position: absolute;
+  right: 0.72rem;
+  bottom: 0.36rem;
+  left: 0.72rem;
+  height: 2px;
+  content: '';
+  background: var(--primary);
+  border-radius: 99px;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 220ms ease;
+}
+
+.nav-pill .site-nav a:hover,
+.nav-pill .site-nav a:focus-visible { color: var(--primary); background: transparent; }
+.nav-pill .site-nav a:hover::after,
+.nav-pill .site-nav a:focus-visible::after,
+.nav-pill .site-nav a[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
+.nav-pill .site-nav a[aria-current='page'] { color: var(--primary); }
+
+@media (max-width: 720px) {
+  .brand-mark { width: 2.35rem; height: 2.35rem; }
+  .nav-pill .site-nav a::after { right: 1rem; bottom: 0.22rem; left: 1rem; }
+  .nav-pill .site-nav a[aria-current='page'] { background: #e1eeea; }
+}
+
 /* Sedikit lebih santai: gaya catatan kelas, bukan kartu template yang seragam. */
 :root {
   --bg: #f7f4ed;
@@ -1071,4 +1141,17 @@ body { background: #f7f4ed; }
 @media (max-width: 390px) {
   .gallery-grid { grid-template-columns: 1fr; }
   .gallery-card img, .gallery-thumb { height: 200px; }
+}
+
+/* Penyesuaian akhir navbar agar menang atas gaya halaman lainnya. */
+.site-header { background: rgba(247, 244, 237, 0.82); border-bottom: 0; box-shadow: 0 1px 0 rgba(25, 55, 61, 0.07); }
+.header-inner { padding: 0.8rem 0; }
+.nav-pill .site-nav { gap: 0.12rem; }
+.nav-pill .site-nav a { padding: 0.55rem 0.72rem 0.62rem; color: rgba(25, 55, 61, 0.78); font-size: 0.88rem; font-weight: 700; }
+.nav-pill .site-nav a:hover, .nav-pill .site-nav a:focus-visible { color: var(--primary); background: transparent; }
+
+@media (max-width: 720px) {
+  .header-inner { padding: 0.75rem 0; }
+  .nav-pill .site-nav a { padding: 0.75rem 1rem; }
+  .nav-pill .site-nav a[aria-current='page'] { background: #e1eeea; }
 }

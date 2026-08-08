@@ -139,6 +139,11 @@ menuToggle?.addEventListener('click', () => {
 });
 
 document.querySelectorAll('.site-nav a').forEach((link) => {
+  const linkUrl = new URL(link.href, window.location.href);
+  const isHomeSection = window.location.pathname.endsWith('index.html') && linkUrl.hash === '#home';
+  const isCurrentPage = linkUrl.pathname === window.location.pathname && (!linkUrl.hash || isHomeSection);
+  if (isCurrentPage) link.setAttribute('aria-current', 'page');
+
   link.addEventListener('click', () => {
     if (window.innerWidth <= 720) {
       siteNav?.classList.remove('open');
