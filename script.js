@@ -274,9 +274,10 @@ const STORAGE_KEY = 'sevenk-theme';
 function applyTheme(dark) {
   document.body.classList.toggle('dark', dark);
   if (themeToggle) {
-    themeToggle.textContent = dark ? '☀️' : '🌙';
-    themeToggle.setAttribute('aria-pressed', String(dark));
+    themeToggle.setAttribute('aria-checked', String(dark));
     themeToggle.setAttribute('aria-label', dark ? 'Ganti ke mode terang' : 'Ganti ke mode gelap');
+    const icon = themeToggle.querySelector('.theme-toggle-icon');
+    if (icon) icon.textContent = dark ? '☀️' : '🌙';
   }
 }
 

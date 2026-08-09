@@ -1685,7 +1685,10 @@ body.has-scrolled .site-header { background: rgba(252, 254, 255, 0.96); box-shad
 .map-frame iframe { width: 100%; height: 100%; min-height: 240px; border: 0; display: block; }
 .location-info { padding: 1.15rem 1.25rem; display: flex; flex-direction: column; gap: 0.7rem; }
 .location-info h3 { margin: 0 0 0.25rem; font-size: 1.25rem; color: var(--primary); }
-.location-info .address, .location-info .phone, .location-info .plus-code { color: var(--muted); font-size: 0.95rem; margin: 0; }
+.location-info .address, .location-info .phone, .location-info .plus-code, .location-info .source-info { color: var(--muted); font-size: 0.95rem; margin: 0; }
+.location-info .source-info a { color: #0b66d0; font-weight: 700; text-decoration: none; }
+.location-info .source-info a:visited { color: #0b66d0; }
+.location-info .source-info a:hover, .location-info .source-info a:focus-visible { color: #0b66d0; text-decoration: underline; }
 .location-info .cta { margin-top: 0.6rem; color: #476b84; font-size: 0.92rem; }
 .location-actions { margin-top: auto; }
 .location-actions .button { padding: 0.7rem 1.2rem; border-radius: 12px; }
@@ -1901,33 +1904,79 @@ a.brand:focus-visible .brand-badge {
   .nav-pill .site-nav.open { max-height: 260px; }
 }
 
-/* ===== Tombol Dark Mode ===== */
+/* ===== Tombol Dark Mode (saklar/switch) ===== */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
   flex: 0 0 auto;
   padding: 0;
-  border: 1px solid rgba(117, 169, 196, 0.45);
-  border-radius: 50%;
-  background: rgba(252, 254, 255, 0.92);
-  color: #31566c;
-  font-size: 1.1rem;
-  line-height: 1;
+  border: none;
+  background: transparent;
   cursor: pointer;
-  box-shadow: 0 6px 14px rgba(70, 128, 164, 0.18);
-  transition: transform 180ms cubic-bezier(.2,.9,.3,1), background 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  border-radius: 999px;
+  transition: transform 180ms cubic-bezier(.2,.9,.3,1);
 }
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
-  transform: translateY(-2px) rotate(-8deg);
-  background: #e8f4fb;
-  border-color: rgba(117, 169, 196, 0.7);
-  box-shadow: 0 10px 20px rgba(70, 128, 164, 0.26);
+  transform: translateY(-1px);
 }
-.theme-toggle:active { transform: scale(0.92); }
+.theme-toggle:focus-visible {
+  outline: 2px solid rgba(117, 169, 196, 0.7);
+  outline-offset: 3px;
+}
+.theme-toggle:active { transform: scale(0.96); }
+
+.theme-toggle-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 3.4rem;
+  height: 1.9rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #b9dced, #8cb8d6);
+  box-shadow: inset 0 1px 3px rgba(49, 86, 108, 0.25), 0 6px 14px rgba(70, 128, 164, 0.22);
+  transition: background 220ms ease, box-shadow 220ms ease;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  left: 0.2rem;
+  top: 0.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 5px rgba(49, 86, 108, 0.3);
+  transition: transform 220ms cubic-bezier(.2,.9,.3,1), background 220ms ease;
+}
+
+.theme-toggle-icon {
+  position: absolute;
+  right: 0.42rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
+  transition: right 220ms cubic-bezier(.2,.9,.3,1);
+}
+
+/* Mode gelap: saklar menyala ke kanan */
+body.dark .theme-toggle-track {
+  background: linear-gradient(135deg, #2c4a5e, #5f9cc4);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4), 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+body.dark .theme-toggle-thumb {
+  transform: translateX(1.5rem);
+  background: #f2c94c;
+}
+body.dark .theme-toggle-icon {
+  right: auto;
+  left: 0.42rem;
+}
 
 /* ===== Dark Mode ===== */
 body.dark {
@@ -1960,8 +2009,7 @@ body.dark .nav-pill .site-nav a { color: var(--text); background: transparent; }
 body.dark .nav-pill .site-nav a:hover,
 body.dark .nav-pill .site-nav a:focus-visible { color: var(--primary); background: rgba(140, 196, 232, 0.12); }
 body.dark .nav-pill .site-nav a[aria-current='page'] { color: var(--primary); background: rgba(140, 196, 232, 0.16); }
-body.dark .theme-toggle { background: #1b2c39; color: #f2c94c; border-color: rgba(140, 196, 232, 0.4); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4); }
-body.dark .theme-toggle:hover { background: #24384a; }
+body.dark .theme-toggle { background: transparent; border: none; box-shadow: none; }
 
 body.dark .hero-bg { background: radial-gradient(circle at 14% 28%, rgba(60, 110, 150, 0.35), transparent 27%), radial-gradient(circle at 87% 76%, rgba(40, 70, 95, 0.5), transparent 23%); }
 body.dark .ghibli-cloud { background: rgba(140, 196, 232, 0.12); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3); }
