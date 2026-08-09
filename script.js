@@ -218,7 +218,7 @@ function applyTheme(dark) {
 
 function initTheme() {
   const saved = localStorage.getItem(STORAGE_KEY);
-  const dark = saved === null ? window.matchMedia('(prefers-color-scheme: dark)').matches : saved === 'dark';
+  const dark = saved === null ? false : saved === 'dark';
   applyTheme(dark);
 }
 
