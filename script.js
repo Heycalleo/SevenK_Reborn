@@ -65,6 +65,89 @@ function setupScrollEffects() {
   updateScrollEffects();
 }
 
+let galleryItems = [];
+let activeFilter = 'all';
+
+function renderGallery() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+
+  grid.innerHTML = '';
+
+  const filtered = activeFilter === 'all'
+    ? galleryItems
+    : galleryItems.filter((item) => (item.tags || []).includes(activeFilter));
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="gallery-card"><p class="muted">Tidak ada foto dengan kategori ini.</p></div>';
+    return;
+  }
+
+  filtered.forEach((item) => {
+    const src = item.src;
+    const resolvedSrc = src.startsWith('http') || src.startsWith('/') || src.startsWith('./') ? src : `images/${src}`;
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+
+    const img = document.createElement('img');
+    img.src = resolvedSrc;
+    img.alt = `Foto galeri kelas: ${src.split('/').pop()}`;
+    img.loading = 'lazy';
+    img.className = 'gallery-thumb';
+    img.addEventListener('click', () => openLightbox(resolvedSrc));
+
+    const actions = document.createElement('div');
+    actions.className = 'gallery-actions';
+
+    const download = document.createElement('a');
+    download.href = resolvedSrc;
+    download.download = src.split('/').pop();
+    download.className = 'download-btn';
+    download.textContent = 'Download';
+    actions.appendChild(download);
+
+    card.appendChild(img);
+    card.appendChild(actions);
+    grid.appendChild(card);
+  });
+
+  setupScrollReveal(grid);
+}
+
+function setupGalleryFilters() {
+  const container = document.getElementById('galleryFilters');
+  if (!container) return;
+
+  const tagSet = new Set();
+  galleryItems.forEach((item) => (item.tags || []).forEach((tag) => tagSet.add(tag)));
+  const tags = Array.from(tagSet);
+
+  const names = { all: 'Semua' };
+  tags.forEach((tag) => { names[tag] = tag.charAt(0).toUpperCase() + tag.slice(1); });
+
+  const options = ['all', ...tags];
+  container.innerHTML = '';
+
+  options.forEach((value) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'gallery-filter-btn';
+    btn.dataset.filter = value;
+    btn.textContent = names[value];
+    btn.setAttribute('aria-pressed', value === activeFilter ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      activeFilter = value;
+      container.querySelectorAll('.gallery-filter-btn').forEach((b) => {
+        b.classList.toggle('active', b.dataset.filter === value);
+        b.setAttribute('aria-pressed', b.dataset.filter === value ? 'true' : 'false');
+      });
+      renderGallery();
+    });
+    if (value === activeFilter) btn.classList.add('active');
+    container.appendChild(btn);
+  });
+}
+
 async function loadGallery() {
   const grid = document.getElementById('galleryGrid');
   if (!grid) return;
@@ -96,35 +179,16 @@ async function loadGallery() {
     return;
   }
 
-  grid.innerHTML = '';
-  items.forEach((src) => {
-    const resolvedSrc = src.startsWith('http') || src.startsWith('/') || src.startsWith('./') ? src : `images/${src}`;
-    const card = document.createElement('div');
-    card.className = 'gallery-card';
+  // Normalisasi: terima format lama (string) dan format baru (objek dengan src + tags)
+  galleryItems = items.map((entry) => {
+    if (typeof entry === 'string') {
+      return { src: entry, tags: [] };
+    }
+    return { src: entry.src || '', tags: Array.isArray(entry.tags) ? entry.tags : [] };
+  }).filter((item) => item.src);
 
-    const img = document.createElement('img');
-    img.src = resolvedSrc;
-    img.alt = `Foto galeri kelas: ${src.split('/').pop()}`;
-    img.loading = 'lazy';
-    img.className = 'gallery-thumb';
-    img.addEventListener('click', () => openLightbox(resolvedSrc));
-
-    const actions = document.createElement('div');
-    actions.className = 'gallery-actions';
-
-    const download = document.createElement('a');
-    download.href = resolvedSrc;
-    download.download = src.split('/').pop();
-    download.className = 'download-btn';
-    download.textContent = 'Download';
-    actions.appendChild(download);
-
-    card.appendChild(img);
-    card.appendChild(actions);
-    grid.appendChild(card);
-  });
-
-  setupScrollReveal(grid);
+  setupGalleryFilters();
+  renderGallery();
 }
 
 function openLightbox(src) {
