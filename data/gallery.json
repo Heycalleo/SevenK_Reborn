@@ -1,5 +1,8 @@
 [
-  "cuking.jpg",
-  "cuking1.jpg",
-  "cuking2.jpg"
+  { "src": "potoklas.jpeg", "tags": ["olahraga"] },
+  { "src": "potoklas2.jpeg", "tags": ["olahraga"] },
+  { "src": "potoklas3.jpeg", "tags": ["olahraga"] },
+  { "src": "potoklas4.jpeg", "tags": ["olahraga"] },
+  { "src": "potoklas5.jpeg", "tags": ["olahraga"] },
+  { "src": "potoklas6.jpeg", "tags": ["olahraga"] }
 ]

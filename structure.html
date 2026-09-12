@@ -12,24 +12,31 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true">7K</span>
+      <a href="index.html" class="brand" aria-label="Kembali ke beranda">
         <div>
           <h1>Class Seven K</h1>
           <p>Struktur Kelas — daftar jabatan, nama, dan wakil.</p>
         </div>
-      </div>
-      <button class="menu-toggle" id="menuToggle">☰</button>
+      </a>
+<button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-label="Ganti mode terang/gelap" aria-checked="false">
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+          <span class="theme-toggle-thumb" aria-hidden="true"></span>
+        </span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">☰</button>
       <div class="nav-pill">
         <nav class="site-nav" id="siteNav" aria-label="Navigasi utama">
           <a href="index.html">Beranda</a>
           <a href="structure.html">Struktur</a>
           <a href="schedule.html">Jadwal</a>
+          <a href="Piket.html">Piket</a>
           <a href="index.html#gallery">Galeri</a>
+          <a href="sosmed.html">Sosmed</a>
         </nav>
       </div>
     </div>
-  </header>
+</header>
 
   <main>
     <section class="section section-blue">
@@ -44,7 +51,7 @@
         <div class="structure-grid">
           <div class="structure-card">
             <h4>Ketua Kelas</h4>
-            <p><strong>Adriel K.</strong></p>
+            <p><strong>Adriel Kimu</strong></p>
             <p>Wakil: <strong>Gwyneth qurratul Ain</strong></p>
           </div>
           <div class="structure-card">
@@ -81,10 +88,15 @@
             <p><strong>Mohammad Rajab</strong></p>
           </div>
         </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>Made by Love</p>
+    <div class="container footer-inner">
+      <p class="footer-class">Seven K</p>
+      <p class="footer-message">Satu kelas, banyak cerita, dan kenangan yang tetap pulang bersama.</p>
+      <p class="footer-copy">Made with love by Seven K · <span data-current-year></span></p>
     </div>
   </footer>
 

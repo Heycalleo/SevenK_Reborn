@@ -2,8 +2,9 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seven K</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Website resmi kelas 7K SMP Negeri 3 Luwuk berisi jadwal pelajaran, struktur kelas, galeri kegiatan, dan pengumuman terbaru." />
+  <title>Website Resmi Kelas 7K SMP Negeri 3 Luwuk</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -12,35 +13,41 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <div class="brand">
-        
+      <a href="#home" class="brand" aria-label="Kembali ke beranda">
         <div>
           <h1>Class Seven K</h1>
           <p>Kelas 7K — Kelas paling Dahsyat di spentil</p>
         </div>
-      </div>
-      <button class="menu-toggle" id="menuToggle">☰</button>
+      </a>
+<button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-label="Ganti mode terang/gelap" aria-checked="false">
+        <span class="theme-toggle-track">
+          <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+          <span class="theme-toggle-thumb" aria-hidden="true"></span>
+        </span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">☰</button>
       <div class="nav-pill">
         <nav class="site-nav" id="siteNav" aria-label="Navigasi utama">
           <a href="#home">Beranda</a>
           <a href="structure.html">Struktur</a>
           <a href="schedule.html">Jadwal</a>
+          <a href="Piket.html">Piket</a>
           <a href="#gallery">Galeri</a>
+          <a href="sosmed.html">Sosmed</a>
         </nav>
       </div>
     </div>
   </header>
 
-  <main>
-    <section class="hero" id="home">
+<main>
       <div class="hero-bg"></div>
-      
+      <div class="ghibli-cloud cloud-one" aria-hidden="true"></div>
+      <div class="ghibli-cloud cloud-two" aria-hidden="true"></div>
+
       <div class="container hero-content">
         <div class="hero-copy">
           <p class="eyebrow">Class Seven K</p>
-          <h2>WELCOME TO KELAS PALING DAHSYAT
-
-</h2>
+          <h2>WELCOME TO KELAS PALING DAHSYAT</h2>
           <p>Together we create memories. Tempat menyimpan semua jejak dan kenangan terbaik kelas 7K.</p>
           <div class="hero-stats">
             <div class="stat-card">
@@ -51,7 +58,9 @@
           <div class="hero-actions">
             <div class="hero-buttons">
               <a href="structure.html" class="button">Lihat Struktur</a>
+              <a href="Piket.html" class="button secondary">Lihat Jadwal Piket</a>
               <a href="#gallery" class="button secondary">Buka Galeri</a>
+              <a href="sosmed.html" class="button secondary">Follow akun kami</a>
             </div>
             <aside class="quick-info-card">
               <h3>Apa saja yang ada di website ini?</h3>
@@ -59,46 +68,81 @@
                 <li>Struktur kelas lengkap untuk 7K.</li>
                 <li>Jadwal pelajaran.</li>
                 <li>Galeri foto dan kenang-kenangan.</li>
+                <li>Lokasi Sekolah dan website resmi sekolah.</li>
               </ul>
             </aside>
           </div>
         </div>
-
-        
       </div>
     </section>
-
-    <!-- Struktur kelas dipindah ke halaman terpisah: structure.html -->
-
-    
 
     <section class="section section-wave" id="gallery">
       <div class="container">
         <div class="gallery-header">
           <div>
             <h3>Galeri</h3>
-            <p class="section-intro">Galeri Kenangan
-
-Waktu boleh berlalu, tapi kenangan akan tetap ada. Di sini kami menyimpan setiap sudut cerita, tawa, dan perjuangan bersama sebagai satu keluarga.</p>
+            <p class="section-intro">Galeri Kenangan — waktu boleh berlalu, tapi kenangan akan tetap ada. Di sini kami menyimpan setiap sudut cerita, tawa, dan perjuangan bersama sebagai satu keluarga.</p>
           </div>
-          <button id="galleryToggle" class="gallery-toggle" aria-expanded="true" type="button">Sembunyikan</button>
+<button id="galleryToggle" class="gallery-toggle" aria-expanded="true" type="button">Sembunyikan</button>
         </div>
+        <div id="galleryFilters" class="gallery-filters" role="group" aria-label="Filter galeri"></div>
         <div id="galleryGrid" class="gallery-grid" aria-live="polite">
           <!-- Gallery images are generated from gallery.json by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-location" id="lokasi">
+      <div class="container">
+        <div class="location-card">
+          <div class="map-frame">
+            <iframe
+              title="Peta Lokasi SMP Negeri 3 Luwuk"
+              src="https://www.google.com/maps?q=SMP%20Negeri%203%20Luwuk%20Jl.%20Ki%20Hajar%20Dewantoro%20No.10%20Karaton%20Luwuk&output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+          <div class="location-info">
+            <h3>Lokasi Sekolah — SMP Negeri 3 Luwuk</h3>
+            <p class="address">Jl. Ki Hajar Dewantoro No.10, Karaton, Luwuk, Kabupaten Banggai, Sulawesi Tengah 94711</p>
+            <p class="phone">Telepon: (0461) 21276</p>
+<p class="plus-code">Plus code: 2QRQ+HP Karaton, Kabupaten Banggai, Sulawesi Tengah</p>
+            <p class="source-info">Sumber informasi: <a href="https://sekolah.data.kemendikdasmen.go.id/profil-sekolah/20E2BE58-013C-E111-A3CF-F9DAA0691DCB" target="_blank" rel="noopener noreferrer">Kemendikdasmen Dapodik</a></p>
+
+<div class="location-actions">
+<a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=SMP+Negeri+3+Luwuk+Jl.+Ki+Hajar+Dewantoro+No.10" target="_blank" rel="noopener">Buka di Maps</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-website-card">
+        
+          <div class="school-website-text">
+            <span class="school-website-kicker">Website Resmi Sekolah</span>
+            <h4>SMP Negeri 3 Luwuk</h4>
+            <p>Kunjungi situs resmi sekolah untuk info lebih lanjut, pengumuman, dan profil sekolah.</p>
+          </div>
+<a class="button secondary" href="https://www.smpn3luwuk.sch.id/home" target="_blank" rel="noopener noreferrer">Kunjungi Website</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>Made by Love</p>
-      <p class="footer-note">Instagram kelas: <a href="https://www.instagram.com/classsevenk__spentil7k?igsh=NW9mcGVpam41eGx2" target="_blank" rel="noopener noreferrer">@
-classsevenk__spentil7k</a></p>
-      <p class="footer-note">Instagram SMP 3 Luwuk: <a href="https://www.instagram.com/smpn_3_luwuk/" target="_blank" rel="noopener noreferrer">@SMPN3Luwuk</a></p>
+    <div class="container footer-inner">
+      <p class="footer-class">Seven K</p>
+      <p class="footer-message">Satu kelas, banyak cerita, dan kenangan yang tetap pulang bersama.</p>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/classsevenk__spentil7k?igsh=NW9mcGVpam41eGx2" target="_blank" rel="noopener noreferrer">Instagram 7K</a>
+        <a href="https://www.instagram.com/smpn_3_luwuk/" target="_blank" rel="noopener noreferrer">SMPN 3 Luwuk</a>
+      </div>
+      <p class="footer-copy">#lovespentil💜</p>
+      <p class="footer-copy">Made with love by Seven K · <span data-current-year></span></p>
     </div>
   </footer>
 
   <script src="script.js"></script>
 </body>
 </html>
+
