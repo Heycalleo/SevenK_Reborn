@@ -272,13 +272,60 @@ a.brand:focus-visible {
   border: 1px solid rgba(11, 102, 208, 0.18);
   border-radius: 22px;
   box-shadow: 0 18px 32px rgba(11, 102, 208, 0.08);
-  padding: 1.2rem 1.3rem;
+  padding: 0.85rem 1rem;
+}
+
+.quick-info-card details {
+  width: 100%;
+}
+
+.quick-info-card summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-weight: 700;
+  color: var(--text);
+  padding: 0.2rem 0;
+}
+
+.quick-info-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.quick-info-card summary::after {
+  content: '▾';
+  color: var(--primary);
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.quick-info-card details[open] summary::after {
+  content: '▴';
 }
 
 .quick-info-card h3 {
   margin: 0 0 0.85rem;
   font-size: 1.1rem;
   color: var(--text);
+}
+
+.quick-info-card .info-content {
+  padding-top: 0.9rem;
+}
+
+.quick-info-card h4 {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.quick-info-card p {
+  margin: 0 0 0.8rem;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
 .quick-info-card ul {
@@ -288,8 +335,8 @@ a.brand:focus-visible {
 }
 
 .quick-info-card li {
-  margin-bottom: 0.75rem;
-  line-height: 1.6;
+  margin-bottom: 0.7rem;
+  line-height: 1.5;
 }
 
 .hero-stats {

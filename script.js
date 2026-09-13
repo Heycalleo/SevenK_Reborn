@@ -313,6 +313,11 @@ document.addEventListener('DOMContentLoaded', () => {
     year.textContent = String(new Date().getFullYear());
   });
 
+  const infoAccordion = document.querySelector('.info-accordion details');
+  if (infoAccordion && window.innerWidth <= 720) {
+    infoAccordion.open = false;
+  }
+
   setupScrollReveal();
   setupScrollEffects();
   animateStats();
