@@ -67,6 +67,7 @@ function setupScrollEffects() {
 
 let galleryItems = [];
 let activeFilter = 'all';
+let galleryLoaded = false;
 
 function renderGallery() {
   const grid = document.getElementById('galleryGrid');
@@ -93,6 +94,10 @@ function renderGallery() {
     img.src = resolvedSrc;
     img.alt = `Foto galeri kelas: ${src.split('/').pop()}`;
     img.loading = 'lazy';
+    img.decoding = 'async';
+    img.fetchPriority = 'low';
+    img.width = 720;
+    img.height = 1280;
     img.className = 'gallery-thumb';
     img.addEventListener('click', () => openLightbox(resolvedSrc));
 
@@ -152,26 +157,18 @@ async function loadGallery() {
   const grid = document.getElementById('galleryGrid');
   if (!grid) return;
 
-  const urls = ['data/gallery.json', 'gallery.json'];
   let items = null;
 
-  for (const url of urls) {
-    try {
-      const res = await fetch(url, { cache: 'no-store' });
-      if (!res.ok) {
-        console.warn(`Gallery load failed from ${url}:`, res.status);
-        continue;
-      }
+  try {
+    // Data galeri boleh memakai cache browser; tidak perlu diunduh ulang pada
+    // setiap kunjungan halaman.
+    const res = await fetch('data/gallery.json');
+    if (res.ok) {
       const data = await res.json();
-      if (!Array.isArray(data)) {
-        console.warn(`Gallery JSON invalid from ${url}`);
-        continue;
-      }
-      items = data;
-      break;
-    } catch (error) {
-      console.warn(`Gallery fetch error from ${url}:`, error);
+      if (Array.isArray(data)) items = data;
     }
+  } catch (error) {
+    console.warn('Gallery fetch error:', error);
   }
 
   if (!items) {
@@ -189,6 +186,42 @@ async function loadGallery() {
 
   setupGalleryFilters();
   renderGallery();
+}
+
+function setupGalleryLoading() {
+  const gallery = document.getElementById('gallery');
+  if (!gallery || galleryLoaded) return;
+
+  const load = () => {
+    if (galleryLoaded) return;
+    galleryLoaded = true;
+    loadGallery();
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    load();
+    return;
+  }
+
+  // Galeri dimuat ketika sudah mendekati layar, bukan saat beranda dibuka.
+  const galleryObserver = new IntersectionObserver((entries, observer) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    observer.disconnect();
+    load();
+  }, { rootMargin: '200px 0px' });
+
+  galleryObserver.observe(gallery);
+}
+
+function setupHeroAnimationPause() {
+  const hero = document.querySelector('.hero');
+  if (!hero || !('IntersectionObserver' in window)) return;
+
+  const heroObserver = new IntersectionObserver(([entry]) => {
+    hero.classList.toggle('is-offscreen', !entry.isIntersecting);
+  });
+
+  heroObserver.observe(hero);
 }
 
 function openLightbox(src) {
@@ -321,7 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScrollReveal();
   setupScrollEffects();
   animateStats();
-  loadGallery();
+  setupGalleryLoading();
+  setupHeroAnimationPause();
 
   const galleryToggle = document.getElementById('galleryToggle');
   const galleryGrid = document.getElementById('galleryGrid');

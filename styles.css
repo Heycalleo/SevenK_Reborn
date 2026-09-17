@@ -2172,3 +2172,150 @@ body.dark .section h3::after { background: rgba(140, 196, 232, 0.3); }
   body.dark .nav-pill .site-nav a { border-color: rgba(140, 196, 232, 0.15); background: rgba(22, 36, 47, 0.9); color: #cfe4f2; }
   body.dark .nav-pill .site-nav a[aria-current='page'] { background: rgba(140, 196, 232, 0.18); color: var(--primary); }
 }
+
+/* ===== Class VII-K: palet kebun hijau, kertas hangat, bunga matahari ===== */
+:root {
+  --bg: #f4f0d8;
+  --surface: #fffdf1;
+  --surface-soft: #e8edc9;
+  --text: #293a22;
+  --muted: #5d6843;
+  --primary: #526d36;
+  --accent: #aebc68;
+  --accent-2: #e8df9a;
+  --shadow: 0 14px 30px rgba(48, 71, 35, 0.13);
+}
+
+body {
+  background:
+    radial-gradient(circle at 8% 6%, rgba(218, 205, 108, 0.26), transparent 22%),
+    radial-gradient(circle at 92% 82%, rgba(111, 139, 72, 0.18), transparent 27%),
+    linear-gradient(155deg, #fffdf1 0%, #f4f0d8 52%, #e2e8bf 100%);
+}
+body::before { background: radial-gradient(circle, rgba(109, 139, 72, 0.25), transparent 60%); }
+
+.site-header,
+body.has-scrolled .site-header { background: rgba(255, 253, 241, 0.92); border-bottom-color: rgba(70, 91, 43, 0.17); }
+.site-header::after { background: repeating-linear-gradient(90deg, rgba(93, 116, 56, 0.36) 0 6px, transparent 6px 12px); }
+.nav-pill .site-nav a:hover,
+.nav-pill .site-nav a:focus-visible,
+.button.secondary,
+.nav-pill .site-nav a[aria-current='page'] { background: #e7edc9; }
+.nav-pill .site-nav a:hover,
+.nav-pill .site-nav a[aria-current='page'] { border-color: rgba(82, 109, 54, 0.5); }
+
+.hero-bg {
+  background:
+    radial-gradient(circle at 14% 28%, rgba(184, 199, 112, 0.54), transparent 27%),
+    radial-gradient(circle at 87% 76%, rgba(239, 211, 93, 0.3), transparent 23%),
+    linear-gradient(155deg, rgba(255, 253, 241, 0.7), rgba(230, 237, 194, 0.65));
+}
+.ghibli-cloud { background: rgba(255, 253, 236, 0.6); box-shadow: 0 12px 26px rgba(63, 91, 42, 0.09); }
+.hero.is-offscreen .ghibli-cloud { animation-play-state: paused; }
+
+.section-blue { background: #e9efd0; }
+.section-wave { background: rgba(255, 253, 241, 0.8); }
+.section-location { background: linear-gradient(180deg, rgba(250, 249, 226, 0.7), rgba(225, 235, 193, 0.78)); }
+.section h3::after { background: rgba(218, 193, 64, 0.43); }
+.section-intro { border-left-color: rgba(92, 118, 57, 0.5); }
+
+.button { background: var(--primary); box-shadow: 0 4px 0 #374c26; }
+.button:hover,
+.button:focus-visible { box-shadow: 0 2px 0 #374c26; }
+.gallery-toggle,
+.gallery-filter-btn,
+.social-button { background: #e3ebbd; color: #3f5d2b; }
+.gallery-filter-btn.active { background: #5b773b; border-color: #5b773b; color: #fffdf1; }
+.download-btn { background: #dce8ad; color: #38542a; }
+
+.quick-info-card,
+.stat-card,
+.gallery-card,
+.school-info-card,
+.official-social-card,
+.student-social-card { border-color: rgba(102, 127, 59, 0.22); background: rgba(255, 253, 241, 0.84); }
+.highlight-card { background: linear-gradient(135deg, #e7efbb 0%, #cbdc91 100%); border-color: rgba(84, 111, 47, 0.38); box-shadow: 0 22px 45px rgba(64, 88, 39, 0.15); }
+.highlight-card span { background: #5b773b; }
+.highlight-card h4 { color: #3f5e2c; }
+.highlight-card p { color: #59683d; }
+
+.schedule-card { border-color: rgba(78, 105, 48, 0.18); }
+.schedule-card::after { background: #e6dc92; }
+.schedule-day { border-bottom-color: rgba(78, 105, 48, 0.2); }
+.structure-card { border-color: rgba(92, 119, 55, 0.24); background: linear-gradient(145deg, #fffdf1 0%, #edf1d4 100%); }
+.structure-card h4 { color: #45642e; }
+.structure-card p { color: #637047; }
+.structure-card p strong { color: #354d29; }
+.structure-card:nth-child(4n + 1) { --role-color: #778e46; --role-bg: #edf1d4; }
+.structure-card:nth-child(4n + 2) { --role-color: #b3a94d; --role-bg: #f5efd0; }
+.structure-card:nth-child(4n + 3) { --role-color: #658c58; --role-bg: #e6eed5; }
+.structure-card:nth-child(4n) { --role-color: #9b9d51; --role-bg: #f1efd3; }
+
+.official-social-card { background: linear-gradient(135deg, #fffdf1, #edf1d2); border-color: #c5d38d; box-shadow: 0 14px 30px rgba(64, 88, 39, 0.1); }
+.official-social-card h4,
+.student-social-heading h4,
+.student-social-card h5 { color: #3e5d2d; }
+.official-social-card p,
+.student-social-card p,
+.student-social-heading > p { color: #667149; }
+.social-kicker { color: #668044; }
+.student-social-empty { border-color: #c5d38d; background: rgba(255, 253, 241, 0.7); color: #667149; }
+.student-social-empty span { background: #e7edc9; color: #5d793d; }
+.location-info .source-info a,
+.location-info .source-info a:visited,
+.location-info .source-info a:hover,
+.location-info .source-info a:focus-visible { color: #4e7032; }
+.school-website-card { border-color: rgba(92, 119, 55, 0.2); box-shadow: 0 16px 36px rgba(64, 88, 39, 0.08); }
+.school-website-icon { background: linear-gradient(135deg, #e7edbd, #b8cb77); box-shadow: 0 6px 14px rgba(64, 88, 39, 0.14); }
+.brand-badge { background: linear-gradient(145deg, #d7df8e, #718c46); box-shadow: 0 6px 14px rgba(64, 88, 39, 0.2); }
+.theme-toggle-track { background: linear-gradient(135deg, #d9d875, #7f994d); }
+.scroll-progress { background: linear-gradient(90deg, #e0cf60, #6e8b44, #dce79f); }
+.back-to-top { background: linear-gradient(145deg, #b8c96d, #5c783c); }
+.site-footer { background: linear-gradient(180deg, rgba(235, 240, 207, 0.92), rgba(255, 253, 241, 0.98)); color: #56633d; border-top-color: rgba(78, 105, 48, 0.17); }
+.footer-class { color: #4f7032; }
+.footer-links a { color: #46642f; border-color: #bdcc86; background: rgba(255, 253, 241, 0.78); }
+
+body.dark {
+  --bg: #172318;
+  --surface: #203220;
+  --surface-soft: #2c4128;
+  --text: #edf0d2;
+  --muted: #b6c29c;
+  --primary: #d1d874;
+  --accent: #8ca65d;
+  --accent-2: #354d2c;
+  --shadow: 0 14px 30px rgba(0, 0, 0, 0.38);
+  background-image: radial-gradient(rgba(170, 190, 104, 0.06) 0.65px, transparent 0.7px), linear-gradient(160deg, #172318 0%, #203220 52%, #293d28 100%) !important;
+}
+body.dark .site-header,
+body.dark.has-scrolled .site-header { background: rgba(24, 38, 25, 0.94); border-bottom-color: rgba(210, 220, 116, 0.17); }
+body.dark .site-header::after { background: repeating-linear-gradient(90deg, rgba(210, 220, 116, 0.3) 0 6px, transparent 6px 12px); }
+body.dark .hero-bg { background: radial-gradient(circle at 14% 28%, rgba(102, 137, 76, 0.38), transparent 27%), radial-gradient(circle at 87% 76%, rgba(152, 140, 53, 0.26), transparent 23%); }
+body.dark .ghibli-cloud { background: rgba(208, 219, 135, 0.12); }
+body.dark .section-blue { background: #243721; }
+body.dark .section-wave { background: rgba(22, 35, 23, 0.84); }
+body.dark .button { box-shadow: 0 4px 0 #879940; }
+body.dark .button.secondary,
+body.dark .gallery-toggle,
+body.dark .download-btn { background: rgba(210, 220, 116, 0.16); color: var(--primary); }
+body.dark .highlight-card { background: linear-gradient(135deg, #2a4026, #344d2a); border-color: rgba(210, 220, 116, 0.24); }
+body.dark .highlight-card span { background: #879c4d; }
+body.dark .highlight-card h4,
+body.dark .official-social-card h4,
+body.dark .student-social-heading h4 { color: #edf0d2; }
+body.dark .highlight-card p,
+body.dark .official-social-card p,
+body.dark .student-social-card p { color: #b6c29c; }
+body.dark .site-footer { background: linear-gradient(180deg, rgba(32, 50, 32, 0.94), rgba(23, 35, 24, 0.98)); }
+body.dark .site-footer::before { background: #203220; }
+
+@media (max-width: 720px) {
+  /* Header sticky tidak memakai blur GPU supaya scroll HP lebih enteng. */
+  .site-header,
+  body.has-scrolled .site-header { background: rgba(255, 253, 241, 0.97); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  body.dark .site-header,
+  body.dark.has-scrolled .site-header { background: rgba(24, 38, 25, 0.97); }
+  .section-location,
+  #kontak { content-visibility: auto; contain-intrinsic-size: auto 620px; }
+  .site-footer { content-visibility: auto; contain-intrinsic-size: auto 260px; }
+}
