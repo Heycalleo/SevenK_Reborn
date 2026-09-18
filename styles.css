@@ -2296,6 +2296,39 @@ body.dark .hero-bg { background: radial-gradient(circle at 14% 28%, rgba(102, 13
 body.dark .ghibli-cloud { background: rgba(208, 219, 135, 0.12); }
 body.dark .section-blue { background: #243721; }
 body.dark .section-wave { background: rgba(22, 35, 23, 0.84); }
+body.dark .section h3::after { background: rgba(210, 198, 77, 0.32); }
+body.dark .section-intro { border-left-color: rgba(158, 187, 96, 0.58); }
+body.dark .school-info-card {
+  background: linear-gradient(145deg, #293f28, #203220);
+  border-color: rgba(210, 220, 116, 0.18);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
+}
+body.dark .school-info-card h4 { color: #edf0d2; }
+body.dark .contact-list p { color: #b6c29c; }
+body.dark .contact-list a { color: #d1d874; }
+body.dark .school-info-card .button.secondary {
+  background: #496331;
+  color: #f4f5dc;
+  box-shadow: 0 4px 0 #273a20;
+}
+body.dark .section-location { background: linear-gradient(180deg, #203220, #192a1c); }
+body.dark .location-card {
+  background: linear-gradient(180deg, #263b26, #203220);
+  border-color: rgba(210, 220, 116, 0.16);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+}
+body.dark .location-info .source-info a,
+body.dark .location-info .source-info a:visited,
+body.dark .location-info .source-info a:hover,
+body.dark .location-info .source-info a:focus-visible { color: #d1d874; }
+body.dark .school-website-card {
+  background: linear-gradient(135deg, #263b26, #203220);
+  border-color: rgba(210, 220, 116, 0.16);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+}
+body.dark .school-website-icon { background: linear-gradient(135deg, #4c6635, #7f994d); }
+body.dark .school-website-text h4 { color: #edf0d2; }
+body.dark .school-website-text p { color: #b6c29c; }
 body.dark .button { box-shadow: 0 4px 0 #879940; }
 body.dark .button.secondary,
 body.dark .gallery-toggle,
