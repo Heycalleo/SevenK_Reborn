@@ -2315,6 +2315,49 @@ body.dark .site-footer::before { background: #203220; }
   body.has-scrolled .site-header { background: rgba(255, 253, 241, 0.97); -webkit-backdrop-filter: none; backdrop-filter: none; }
   body.dark .site-header,
   body.dark.has-scrolled .site-header { background: rgba(24, 38, 25, 0.97); }
+
+  /* Aturan menu HP lama memakai biru sendiri; samakan dengan palet kelas. */
+  .nav-pill .site-nav {
+    background: rgba(255, 253, 241, 0.98);
+    box-shadow: 0 12px 26px rgba(64, 88, 39, 0.13);
+  }
+  .nav-pill .site-nav a {
+    color: #45642e;
+    border-color: #d6e0aa;
+    background: #f7f5e6;
+  }
+  .nav-pill .site-nav a::before,
+  .nav-pill .site-nav a:nth-child(2)::before,
+  .nav-pill .site-nav a:nth-child(3)::before,
+  .nav-pill .site-nav a:nth-child(4)::before { background: #829c4f; }
+  .nav-pill .site-nav a:nth-child(3)::before { background: #c1ac45; }
+  .nav-pill .site-nav a[aria-current='page'] {
+    color: #3c592a;
+    border-color: #9fb66a;
+    background: #e3ebbd;
+  }
+  .nav-pill .site-nav a[aria-current='page']::before {
+    background: #668342;
+    box-shadow: 0 0 0 4px rgba(120, 151, 70, 0.14);
+  }
+  .menu-toggle { background: #f7f5e6; box-shadow: 0 12px 25px rgba(64, 88, 39, 0.12); }
+
+  body.dark .nav-pill .site-nav { background: rgba(28, 45, 27, 0.98); }
+  body.dark .nav-pill .site-nav a { color: #e4eac5; border-color: rgba(192, 211, 117, 0.2); background: #263c25; }
+  body.dark .nav-pill .site-nav a[aria-current='page'] { color: #edf0d2; border-color: #809951; background: #3a532d; }
+  body.dark .menu-toggle { background: #203220; box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3); }
+
+  .quick-info-card details,
+  .quick-info-card .info-content { color: #53643c; }
+  .quick-info-card summary::after { color: #5b773b; }
+  .gallery-filter-btn { border-color: #bdcd82; }
+  .location-card {
+    background: linear-gradient(180deg, #fffdf1, #f2f3da);
+    border-color: rgba(92, 119, 55, 0.18);
+    box-shadow: 0 20px 50px rgba(64, 88, 39, 0.07);
+  }
+  .school-website-card { background: linear-gradient(135deg, #fffdf1, #edf1d2); }
+
   .section-location,
   #kontak { content-visibility: auto; contain-intrinsic-size: auto 620px; }
   .site-footer { content-visibility: auto; contain-intrinsic-size: auto 260px; }
