@@ -2227,6 +2227,8 @@ body.has-scrolled .site-header { background: rgba(255, 253, 241, 0.92); border-b
 .social-button { background: #e3ebbd; color: #3f5d2b; }
 .gallery-filter-btn.active { background: #5b773b; border-color: #5b773b; color: #fffdf1; }
 .download-btn { background: #dce8ad; color: #38542a; }
+.gallery-more { display: flex; width: fit-content; margin: 1.25rem auto 0; }
+.gallery-more[hidden] { display: none; }
 
 .quick-info-card,
 .stat-card,
@@ -2351,6 +2353,7 @@ body.dark .site-footer::before { background: #203220; }
   .quick-info-card .info-content { color: #53643c; }
   .quick-info-card summary::after { color: #5b773b; }
   .gallery-filter-btn { border-color: #bdcd82; }
+  .gallery-more { width: 100%; }
   .location-card {
     background: linear-gradient(180deg, #fffdf1, #f2f3da);
     border-color: rgba(92, 119, 55, 0.18);

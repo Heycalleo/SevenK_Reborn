@@ -68,10 +68,34 @@ function setupScrollEffects() {
 let galleryItems = [];
 let activeFilter = 'all';
 let galleryLoaded = false;
+const GALLERY_BATCH_SIZE = 6;
+let visibleGalleryCount = GALLERY_BATCH_SIZE;
+
+function getGalleryMoreButton() {
+  const grid = document.getElementById('galleryGrid');
+  if (!grid) return null;
+
+  let button = document.getElementById('galleryMore');
+  if (button) return button;
+
+  button = document.createElement('button');
+  button.id = 'galleryMore';
+  button.type = 'button';
+  button.className = 'button secondary gallery-more';
+  button.textContent = 'Tampilkan lebih banyak';
+  button.addEventListener('click', () => {
+    visibleGalleryCount += GALLERY_BATCH_SIZE;
+    renderGallery();
+  });
+  grid.insertAdjacentElement('afterend', button);
+  return button;
+}
 
 function renderGallery() {
   const grid = document.getElementById('galleryGrid');
   if (!grid) return;
+
+  const moreButton = getGalleryMoreButton();
 
   grid.innerHTML = '';
 
@@ -81,10 +105,11 @@ function renderGallery() {
 
   if (filtered.length === 0) {
     grid.innerHTML = '<div class="gallery-card"><p class="muted">Tidak ada foto dengan kategori ini.</p></div>';
+    if (moreButton) moreButton.hidden = true;
     return;
   }
 
-  filtered.forEach((item) => {
+  filtered.slice(0, visibleGalleryCount).forEach((item) => {
     const src = item.src;
     const resolvedSrc = src.startsWith('http') || src.startsWith('/') || src.startsWith('./') ? src : `images/${src}`;
     const card = document.createElement('div');
@@ -116,6 +141,14 @@ function renderGallery() {
     grid.appendChild(card);
   });
 
+  if (moreButton) {
+    const remaining = filtered.length - visibleGalleryCount;
+    moreButton.hidden = remaining <= 0;
+    moreButton.textContent = remaining > 0
+      ? `Tampilkan ${Math.min(remaining, GALLERY_BATCH_SIZE)} foto lagi`
+      : 'Tampilkan lebih banyak';
+  }
+
   setupScrollReveal(grid);
 }
 
@@ -142,6 +175,7 @@ function setupGalleryFilters() {
     btn.setAttribute('aria-pressed', value === activeFilter ? 'true' : 'false');
     btn.addEventListener('click', () => {
       activeFilter = value;
+      visibleGalleryCount = GALLERY_BATCH_SIZE;
       container.querySelectorAll('.gallery-filter-btn').forEach((b) => {
         b.classList.toggle('active', b.dataset.filter === value);
         b.setAttribute('aria-pressed', b.dataset.filter === value ? 'true' : 'false');
@@ -366,6 +400,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const collapsed = galleryGrid.classList.toggle('collapsed');
     galleryToggle.textContent = collapsed ? 'Tampilkan' : 'Sembunyikan';
     galleryToggle.setAttribute('aria-expanded', String(!collapsed));
+    const galleryMore = document.getElementById('galleryMore');
+    if (galleryMore) {
+      const filteredCount = activeFilter === 'all'
+        ? galleryItems.length
+        : galleryItems.filter((item) => (item.tags || []).includes(activeFilter)).length;
+      galleryMore.hidden = collapsed || filteredCount <= visibleGalleryCount;
+    }
   });
 });
 
