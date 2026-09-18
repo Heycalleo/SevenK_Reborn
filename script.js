@@ -68,7 +68,7 @@ function setupScrollEffects() {
 let galleryItems = [];
 let activeFilter = 'all';
 let galleryLoaded = false;
-const GALLERY_BATCH_SIZE = 6;
+const GALLERY_BATCH_SIZE = 2;
 let visibleGalleryCount = GALLERY_BATCH_SIZE;
 
 function getGalleryMoreButton() {
