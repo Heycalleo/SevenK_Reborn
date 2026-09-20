@@ -6,17 +6,18 @@ lalu klik "Publish".
 
 Aturan ini membuat:
 - Semua orang boleh MEMBACA komentar.
-- Semua orang boleh MENULIS komentar baru (tidak bisa login).
-- Komentar tidak bisa diubah atau dihapus dari halaman web (hanya kamu,
-  lewat Firebase Console, yang bisa menghapus).
+- Semua orang boleh MENULIS komentar baru (tidak perlu login).
+- Hanya ADMIN yang sudah login (email tertentu) yang boleh MENGHAPUS komentar.
+- Komentar tidak bisa diubah oleh siapa pun.
 
-------------------------------------------------------------------
+--------------------------------------------------------------------------
 rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
     match /comments/{commentId} {
       allow read: if true;
+
       allow create: if request.resource.data.name is string
         && request.resource.data.name.size() > 0
         && request.resource.data.name.size() <= 40
@@ -24,17 +25,33 @@ service cloud.firestore {
         && request.resource.data.message.size() > 0
         && request.resource.data.message.size() <= 500
         && request.resource.data.createdAt == request.time;
-      allow update, delete: if false;
+
+      allow update: if false;
+
+      // Hanya admin (akun yang terdaftar) yang boleh menghapus.
+      allow delete: if request.auth != null
+        && request.auth.token.email == 'ADMIN_EMAIL_ANDA';
     }
   }
 }
-------------------------------------------------------------------
+--------------------------------------------------------------------------
 
-Catatan penting:
-- "allow update, delete: if false" berarti orang tidak bisa mengubah atau
-  menghapus komentar lewat website. Untuk menghapus komentar yang tidak
-  pantas, buka Firebase Console > Firestore Database > collection "comments",
-  lalu hapus dokumen yang dimaksud secara manual.
-- Karena tidak ada login, secara teknis seseorang yang paham teknis bisa
-  mengirim banyak komentar (spam). Bila ini menjadi masalah, hubungi saya
-  untuk menambahkan pembatasan tambahan (misalnya reCAPTCHA atau moderasi).
+CARA PAKAI (3 langkah agar hapus komentar lewat website berfungsi):
+
+1. Aktifkan "Email/Password" di Firebase Console:
+   Authentication > Sign-in method > Email/Password > Enable.
+
+2. Buat akun admin:
+   Authentication > Users > Add user.
+   Isi email & kata sandi, lalu ganti 'ADMIN_EMAIL_ANDA' di atas dengan
+   email akun admin yang baru dibuat. Publish ulang aturan.
+
+3. (Opsional) Untuk keamanan ekstra, aktifkan App Check di:
+   Project Settings > App Check, lalu pilih reCAPTCHA untuk web.
+   Ini menolak permintaan dari luar (bot) yang tidak lolih captcha.
+
+Catatan:
+- Sensor kata kasar, captcha, honeypot, dan jeda antar kirim sudah ada
+  di sisi klien (comments.js) untuk menangkal spam sebelum sampai ke server.
+- Jika tidak butuh login admin, cukup hapus bagian "allow delete" atau
+  ubah menjadi `if false` agar tidak ada yang bisa menghapus via website.

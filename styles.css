@@ -1587,3 +1587,107 @@ body.dark .button.secondary {
   background: var(--surface-soft);
   color: var(--primary-deep);
 }
+
+/* ---------- Buku Tamu: admin, captcha, sensor ---------- */
+.comment-honeypot {
+  position: absolute !important;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.comment-captcha input {
+  max-width: 160px;
+}
+
+.comment-admin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-card);
+  background: var(--surface-soft);
+}
+
+.comment-admin-label {
+  color: var(--primary-deep);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.admin-entry {
+  margin-top: 1.25rem;
+}
+
+.admin-link {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--primary-deep);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+
+.admin-link:hover,
+.admin-link:focus-visible {
+  background: var(--surface-soft);
+}
+
+.admin-login {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--surface);
+}
+
+.admin-login input {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-small);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+.admin-login input[type="email"] {
+  flex: 1 1 200px;
+}
+
+.admin-login input[type="password"] {
+  flex: 1 1 200px;
+}
+
+.comment-delete {
+  padding: 0.25rem 0.7rem;
+  border: none;
+  border-radius: var(--r-pill);
+  background: rgba(155, 59, 47, 0.12);
+  color: #9b3b2f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+body.dark .comment-delete {
+  background: rgba(240, 168, 152, 0.22);
+  color: #f0a898;
+}
+
+.comment-delete:hover,
+.comment-delete:focus-visible {
+  background: rgba(155, 59, 47, 0.28);
+}
