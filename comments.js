@@ -31,6 +31,9 @@ const CHALLENGE_WORDS = [
 ];
 
 let challengeAnswer = null;
+const COMMENTS_BATCH = 2;
+let allItems = [];
+let visibleCount = COMMENTS_BATCH;
 
 function setStatus(target, message, tone = '') {
   if (!target) return;
@@ -76,20 +79,42 @@ function formatDate(timestamp) {
   }
 }
 
-function renderComments(items) {
+function getLoadMoreButton() {
+  if (!list) return null;
+  let button = document.getElementById('commentMore');
+  if (button) return button;
+  button = document.createElement('button');
+  button.id = 'commentMore';
+  button.type = 'button';
+  button.className = 'button secondary comment-more';
+  button.textContent = 'Tampilkan lebih banyak';
+  button.addEventListener('click', () => {
+    visibleCount += COMMENTS_BATCH;
+    renderComments();
+  });
+  list.insertAdjacentElement('afterend', button);
+  return button;
+}
+
+function renderComments() {
   if (!list) return;
   list.setAttribute('aria-busy', 'false');
-  list.textContent = '';
 
-  if (!items.length) {
+  const visible = allItems.slice(0, visibleCount);
+
+  if (!visible.length) {
+    list.innerHTML = '';
     const empty = document.createElement('p');
     empty.className = 'muted';
     empty.textContent = 'Belum ada komentar. Jadilah yang pertama menulis pesan untuk 7K.';
     list.appendChild(empty);
+    const more = getLoadMoreButton();
+    if (more) more.hidden = true;
     return;
   }
 
-  items.forEach((item) => {
+  list.innerHTML = '';
+  visible.forEach((item) => {
     const article = document.createElement('article');
     article.className = 'comment-item';
 
@@ -118,6 +143,15 @@ function renderComments(items) {
     article.appendChild(body);
     list.appendChild(article);
   });
+
+  const more = getLoadMoreButton();
+  if (more) {
+    const remaining = allItems.length - visibleCount;
+    more.hidden = remaining <= 0;
+    more.textContent = remaining > 0
+      ? `Tampilkan ${Math.min(remaining, COMMENTS_BATCH)} pesan lagi`
+      : 'Tampilkan lebih banyak';
+  }
 }
 
 async function init() {
@@ -153,7 +187,9 @@ async function init() {
     );
 
     fs.onSnapshot(recentQuery, (snapshot) => {
-      renderComments(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
+      allItems = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+      visibleCount = COMMENTS_BATCH;
+      renderComments();
     }, (error) => {
       console.error('Firestore read error:', error);
       list.setAttribute('aria-busy', 'false');
