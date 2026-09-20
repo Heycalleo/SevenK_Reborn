@@ -1,6 +1,6 @@
 // Buku Tamu: komentar tanpa login, disimpan di Firebase Firestore.
-// Fitur: captcha sederhana, honeypot anti-bot, jeda antar kirim, sensor kata,
-// dan mode admin (login untuk menghapus pesan).
+// Anti-spam: honeypot + tantangan teks (ketik kata yang ditampilkan) +
+// cooldown antar kirim + sensor kata kasar.
 
 import { firebaseConfig, isFirebaseConfigured } from './firebase-config.js';
 
@@ -8,24 +8,15 @@ const form = document.getElementById('commentForm');
 const list = document.getElementById('commentList');
 const status = document.getElementById('commentStatus');
 const submitBtn = document.getElementById('commentSubmit');
-const captchaQuestion = document.getElementById('captchaQuestion');
-const captchaInput = document.getElementById('commentCaptcha');
+const challengeLabel = document.getElementById('captchaQuestion');
+const challengeInput = document.getElementById('commentCaptcha');
 const honeypot = document.getElementById('commentWebsite');
 
-const adminToggle = document.getElementById('adminToggle');
-const adminLoginForm = document.getElementById('adminLoginForm');
-const adminEmail = document.getElementById('adminEmail');
-const adminPassword = document.getElementById('adminPassword');
-const adminLoginBtn = document.getElementById('adminLoginBtn');
-const adminLoginStatus = document.getElementById('adminLoginStatus');
-const adminBar = document.getElementById('commentAdmin');
-const adminLogout = document.getElementById('adminLogout');
-
-const RATE_LIMIT_MS = 30000; // jeda minimal antar komentar
+const RATE_LIMIT_MS = 60000; // cooldown antar kirim yang sama
 const RATE_KEY = 'sevenk-last-comment';
 
-// Daftar kata yang disensor. Dicocokkan sebagai kata utuh agar tidak salah
-// menyensor bagian dari kata lain.
+// Kata yang disensor. Dicocokkan sebagai kata utuh agar tidak salah menyensor
+// bagian dari kata lain.
 const BLOCKED_WORDS = [
   'anjing', 'anjir', 'bangsat', 'bajingan', 'kontol', 'memek', 'pepek',
   'ngentot', 'ngehe', 'kampret', 'keparat', 'brengsek', 'babi', 'tolol',
@@ -33,11 +24,13 @@ const BLOCKED_WORDS = [
   'fuck', 'shit', 'bitch', 'asshole', 'dick', 'bastard'
 ];
 
-// Simpan jawaban captcha yang benar di memori saja.
-let captchaAnswer = null;
-let currentUser = null;
-let latestItems = [];
-let deleteComment = null;
+// Kata untuk tantangan ketik. Bot yang tidak merender teks tidak bisa menjawab.
+const CHALLENGE_WORDS = [
+  'kelas', 'tujuh', 'spentil', 'kenangan', 'galeri', 'piket', 'jadwal',
+  'sekolah', 'teman', 'belajar', 'senang', 'hari', 'minggu', 'keluarga'
+];
+
+let challengeAnswer = null;
 
 function setStatus(target, message, tone = '') {
   if (!target) return;
@@ -49,20 +42,18 @@ function textNode(value) {
   return document.createTextNode(String(value ?? ''));
 }
 
-function makeCaptcha() {
-  const a = 2 + Math.floor(Math.random() * 8);
-  const b = 2 + Math.floor(Math.random() * 8);
-  captchaAnswer = a + b;
-  if (captchaQuestion) captchaQuestion.textContent = `${a} + ${b} = ?`;
-  if (captchaInput) captchaInput.value = '';
+function makeChallenge() {
+  const word = CHALLENGE_WORDS[Math.floor(Math.random() * CHALLENGE_WORDS.length)];
+  challengeAnswer = word.toLowerCase();
+  if (challengeLabel) challengeLabel.textContent = `Ketik kata "${word}" di bawah ini`;
+  if (challengeInput) challengeInput.value = '';
 }
 
-// Mengganti kata terlarang dengan bintang, mempertahankan panjang kata.
+// Mengganti kata terlarang dengan bintang.
 function censorText(value) {
   let result = String(value ?? '');
   BLOCKED_WORDS.forEach((word) => {
-    const pattern = new RegExp(`\\b${word}\\b`, 'gi');
-    result = result.replace(pattern, (match) => '*'.repeat(match.length));
+    result = result.replace(new RegExp(`\\b${word}\\b`, 'gi'), (m) => '*'.repeat(m.length));
   });
   return result;
 }
@@ -77,11 +68,8 @@ function formatDate(timestamp) {
     const date = typeof timestamp?.toDate === 'function' ? timestamp.toDate() : new Date(timestamp);
     if (Number.isNaN(date.getTime())) return '';
     return date.toLocaleString('id-ID', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+      day: 'numeric', month: 'long', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
     });
   } catch (error) {
     return '';
@@ -90,7 +78,6 @@ function formatDate(timestamp) {
 
 function renderComments(items) {
   if (!list) return;
-  latestItems = items;
   list.setAttribute('aria-busy', 'false');
   list.textContent = '';
 
@@ -120,25 +107,6 @@ function renderComments(items) {
     head.appendChild(author);
     head.appendChild(time);
 
-    // Tombol hapus hanya muncul untuk admin yang sudah login.
-    if (currentUser && deleteComment && item.id) {
-      const remove = document.createElement('button');
-      remove.type = 'button';
-      remove.className = 'comment-delete';
-      remove.textContent = 'Hapus';
-      remove.addEventListener('click', async () => {
-        if (!window.confirm('Hapus komentar ini?')) return;
-        remove.disabled = true;
-        try {
-          await deleteComment(item.id);
-        } catch (error) {
-          console.error('Delete error:', error);
-          remove.disabled = false;
-        }
-      });
-      head.appendChild(remove);
-    }
-
     const body = document.createElement('p');
     body.className = 'comment-body';
     String(censorText(item.message) || '').split('\n').forEach((line, index) => {
@@ -155,71 +123,48 @@ function renderComments(items) {
 async function init() {
   if (!form || !list) return;
 
-  makeCaptcha();
+  makeChallenge();
 
   if (!isFirebaseConfigured) {
-    form.querySelectorAll('input, textarea, button').forEach((el) => {
-      el.disabled = true;
-    });
+    form.querySelectorAll('input, textarea, button').forEach((el) => { el.disabled = true; });
     list.setAttribute('aria-busy', 'false');
-    list.innerHTML = '<p class="muted">Buku Tamu belum dikonfigurasi. Pemilik website perlu mengisi <code>firebase-config.js</code> terlebih dahulu.</p>';
+    list.innerHTML = '<p class="muted">Buku Tamu belum dikonfigurasi.</p>';
     return;
   }
 
-  let db;
-  let collection;
-  let addDoc;
-  let deleteDoc;
-  let query;
-  let orderBy;
-  let limit;
-  let onSnapshot;
-  let serverTimestamp;
-  let authApi;
+  let commentsRef;
+  let addComment;
+  let makeTimestamp;
 
   try {
     const appModule = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
-    const firestoreModule = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
-    const authModule = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js');
+    const fs = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
 
     const app = appModule.initializeApp(firebaseConfig);
-    db = firestoreModule.getFirestore(app);
-    collection = firestoreModule.collection;
-    addDoc = firestoreModule.addDoc;
-    deleteDoc = firestoreModule.deleteDoc;
-    query = firestoreModule.query;
-    orderBy = firestoreModule.orderBy;
-    limit = firestoreModule.limit;
-    onSnapshot = firestoreModule.onSnapshot;
-    serverTimestamp = firestoreModule.serverTimestamp;
+    const db = fs.getFirestore(app);
+    commentsRef = fs.collection(db, 'comments');
+    addComment = (data) => fs.addDoc(commentsRef, data);
+    makeTimestamp = () => fs.serverTimestamp();
 
-    const auth = authModule.getAuth(app);
-    authApi = {
-      signIn: (email, password) => authModule.signInWithEmailAndPassword(auth, email, password),
-      signOut: () => authModule.signOut(auth),
-      onChange: (cb) => authModule.onAuthStateChanged(auth, cb)
-    };
+    const recentQuery = fs.query(
+      commentsRef,
+      fs.orderBy('createdAt', 'desc'),
+      fs.limit(100)
+    );
+
+    fs.onSnapshot(recentQuery, (snapshot) => {
+      renderComments(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
+    }, (error) => {
+      console.error('Firestore read error:', error);
+      list.setAttribute('aria-busy', 'false');
+      list.innerHTML = '<p class="muted">Komentar tidak dapat dimuat saat ini.</p>';
+    });
   } catch (error) {
     console.error('Firebase init error:', error);
     list.setAttribute('aria-busy', 'false');
     list.innerHTML = '<p class="muted">Komentar tidak dapat dimuat saat ini.</p>';
     return;
   }
-
-  // Helper hapus dokumen: deleteComment(id)
-  deleteComment = (id) => firestoreModule.deleteDoc(firestoreModule.doc(db, 'comments', id));
-
-  const commentsRef = collection(db, 'comments');
-  const recentQuery = query(commentsRef, orderBy('createdAt', 'desc'), limit(100));
-
-  onSnapshot(recentQuery, (snapshot) => {
-    const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    renderComments(items);
-  }, (error) => {
-    console.error('Firestore read error:', error);
-    list.setAttribute('aria-busy', 'false');
-    list.innerHTML = '<p class="muted">Komentar tidak dapat dimuat saat ini.</p>';
-  });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -238,15 +183,15 @@ async function init() {
       return;
     }
 
-    // Captcha sederhana.
-    const answer = Number(captchaInput?.value.trim());
-    if (!captchaAnswer || answer !== captchaAnswer) {
-      setStatus(status, 'Jawaban verifikasi salah. Coba lagi.', 'error');
-      makeCaptcha();
+    // Tantangan ketik kata (bukan angka) — lebih tahan terhadap bot otomatis.
+    const answer = (challengeInput?.value.trim() || '').toLowerCase();
+    if (!challengeAnswer || answer !== challengeAnswer) {
+      setStatus(status, 'Tantangan tidak sesuai. Coba lagi.', 'error');
+      makeChallenge();
       return;
     }
 
-    // Jeda antar kirim untuk menahan spam beruntun.
+    // Cooldown antar kirim untuk menahan spam beruntun.
     const last = Number(localStorage.getItem(RATE_KEY) || 0);
     const elapsed = Date.now() - last;
     if (elapsed < RATE_LIMIT_MS) {
@@ -265,14 +210,14 @@ async function init() {
     setStatus(status, 'Mengirim...', '');
 
     try {
-      await addDoc(commentsRef, {
+      await addComment({
         name: name.slice(0, 40),
         message: message.slice(0, 500),
-        createdAt: serverTimestamp()
+        createdAt: makeTimestamp()
       });
       localStorage.setItem(RATE_KEY, String(Date.now()));
       form.reset();
-      makeCaptcha();
+      makeChallenge();
       setStatus(status, 'Terima kasih, pesanmu sudah terkirim.', 'success');
     } catch (error) {
       console.error('Firestore write error:', error);
@@ -280,46 +225,6 @@ async function init() {
     } finally {
       submitBtn.disabled = false;
     }
-  });
-
-  // ---------- Admin ----------
-  adminToggle?.addEventListener('click', () => {
-    if (!adminLoginForm) return;
-    adminLoginForm.hidden = !adminLoginForm.hidden;
-  });
-
-  adminLoginForm?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    adminLoginBtn.disabled = true;
-    setStatus(adminLoginStatus, 'Memproses...', '');
-    try {
-      await authApi.signIn(adminEmail.value.trim(), adminPassword.value);
-      setStatus(adminLoginStatus, 'Berhasil masuk.', 'success');
-      adminLoginForm.hidden = true;
-      adminLoginForm.reset();
-    } catch (error) {
-      console.error('Login error:', error);
-      setStatus(adminLoginStatus, 'Email atau kata sandi salah.', 'error');
-    } finally {
-      adminLoginBtn.disabled = false;
-    }
-  });
-
-  adminLogout?.addEventListener('click', async () => {
-    try {
-      await authApi.signOut();
-      setStatus(adminLoginStatus, 'Sudah keluar dari mode admin.', '');
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  });
-
-  authApi.onChange((user) => {
-    currentUser = user;
-    if (adminBar) adminBar.hidden = !user;
-    if (adminToggle) adminToggle.hidden = Boolean(user);
-    // Gambar ulang agar tombol hapus muncul/hilang sesuai status login.
-    renderComments(latestItems);
   });
 }
 

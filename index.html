@@ -236,8 +236,8 @@
           </div>
           <div class="comment-field comment-captcha">
             <label for="commentCaptcha">Verifikasi anti-spam: <span id="captchaQuestion">...</span></label>
-            <input id="commentCaptcha" name="captcha" type="text" inputmode="numeric" autocomplete="off"
-              placeholder="Tulis jawabannya" required />
+            <input id="commentCaptcha" name="captcha" type="text" inputmode="text" autocomplete="off"
+              placeholder="Ketik kata di atas" required />
           </div>
           <div class="comment-form-footer">
             <span id="commentStatus" class="comment-status" role="status" aria-live="polite"></span>
@@ -245,23 +245,8 @@
           </div>
         </form>
 
-        <div id="commentAdmin" class="comment-admin" hidden>
-          <span class="comment-admin-label">Mode admin aktif.</span>
-          <button type="button" id="adminLogout" class="download-btn">Keluar</button>
-        </div>
-
         <div id="commentList" class="comment-list" aria-live="polite" aria-busy="true">
           <p class="muted">Memuat komentar...</p>
-        </div>
-
-        <div class="admin-entry">
-          <button type="button" id="adminToggle" class="admin-link">Masuk sebagai admin</button>
-          <form id="adminLoginForm" class="admin-login" hidden novalidate>
-            <input id="adminEmail" type="email" placeholder="Email admin" autocomplete="username" required />
-            <input id="adminPassword" type="password" placeholder="Kata sandi admin" autocomplete="current-password" required />
-            <button type="submit" class="button" id="adminLoginBtn">Masuk</button>
-            <span id="adminLoginStatus" class="comment-status" role="status" aria-live="polite"></span>
-          </form>
         </div>
       </div>
     </section>

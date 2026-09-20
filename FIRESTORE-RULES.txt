@@ -7,8 +7,9 @@ lalu klik "Publish".
 Aturan ini membuat:
 - Semua orang boleh MEMBACA komentar.
 - Semua orang boleh MENULIS komentar baru (tidak perlu login).
-- Hanya ADMIN yang sudah login (email tertentu) yang boleh MENGHAPUS komentar.
-- Komentar tidak bisa diubah oleh siapa pun.
+- Komentar tidak bisa diubah atau dihapus lewat website.
+  Untuk menghapus komentar yang tidak pantas, buka Firebase Console >
+  Firestore Database > koleksi "comments", lalu hapus dokumen yang dimaksud.
 
 --------------------------------------------------------------------------
 rules_version = '2';
@@ -26,32 +27,15 @@ service cloud.firestore {
         && request.resource.data.message.size() <= 500
         && request.resource.data.createdAt == request.time;
 
-      allow update: if false;
-
-      // Hanya admin (akun yang terdaftar) yang boleh menghapus.
-      allow delete: if request.auth != null
-        && request.auth.token.email == 'ADMIN_EMAIL_ANDA';
+      allow update, delete: if false;
     }
   }
 }
 --------------------------------------------------------------------------
 
-CARA PAKAI (3 langkah agar hapus komentar lewat website berfungsi):
-
-1. Aktifkan "Email/Password" di Firebase Console:
-   Authentication > Sign-in method > Email/Password > Enable.
-
-2. Buat akun admin:
-   Authentication > Users > Add user.
-   Isi email & kata sandi, lalu ganti 'ADMIN_EMAIL_ANDA' di atas dengan
-   email akun admin yang baru dibuat. Publish ulang aturan.
-
-3. (Opsional) Untuk keamanan ekstra, aktifkan App Check di:
-   Project Settings > App Check, lalu pilih reCAPTCHA untuk web.
-   Ini menolak permintaan dari luar (bot) yang tidak lolih captcha.
-
 Catatan:
-- Sensor kata kasar, captcha, honeypot, dan jeda antar kirim sudah ada
-  di sisi klien (comments.js) untuk menangkal spam sebelum sampai ke server.
-- Jika tidak butuh login admin, cukup hapus bagian "allow delete" atau
-  ubah menjadi `if false` agar tidak ada yang bisa menghapus via website.
+- Anti-spam dilakukan di sisi klien (comments.js): honeypot, tantangan ketik
+  kata, cooldown 60 detik antar kirim, dan sensor kata kasar.
+- Untuk lapisan keamanan ekstra, aktifkan App Check (reCAPTCHA) di
+  Project Settings > App Check. Ini menolak permintaan dari bot yang
+  tidak lolih tantikan.
