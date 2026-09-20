@@ -201,16 +201,27 @@
     <section class="section section-wave" id="buku-tamu">
       <div class="container">
         <h3>Buku Tamu</h3>
-        <p class="section-intro">Tinggalkan pesan, kenangan, atau komentar untuk kelas 7K. Masuk dengan akun GitHub untuk menulis, dan komentar akan tersimpan rapi di halaman ini.</p>
-        <div class="comments-frame">
-          <script src="https://utteranc.es/client.js"
-            repo="Heycalleo/SevenK_Reborn"
-            issue-term="pathname"
-            label="komentar"
-            theme="github-light"
-            crossorigin="anonymous"
-            async>
-          </script>
+        <p class="section-intro">Tinggalkan pesan, kenangan, atau komentar untuk kelas 7K. Cukup tulis nama dan pesanmu, tanpa perlu membuat akun apa pun.</p>
+
+        <form id="commentForm" class="comment-form" novalidate>
+          <div class="comment-field">
+            <label for="commentName">Nama</label>
+            <input id="commentName" name="name" type="text" maxlength="40" required
+              placeholder="Tulis namamu" autocomplete="name" />
+          </div>
+          <div class="comment-field">
+            <label for="commentMessage">Pesan</label>
+            <textarea id="commentMessage" name="message" rows="4" maxlength="500" required
+              placeholder="Tulis pesan atau kenangan untuk 7K"></textarea>
+          </div>
+          <div class="comment-form-footer">
+            <span id="commentStatus" class="comment-status" role="status" aria-live="polite"></span>
+            <button type="submit" class="button" id="commentSubmit">Kirim pesan</button>
+          </div>
+        </form>
+
+        <div id="commentList" class="comment-list" aria-live="polite" aria-busy="true">
+          <p class="muted">Memuat komentar...</p>
         </div>
       </div>
     </section>
@@ -313,6 +324,7 @@
   </footer>
 
   <script src="script.min.js" defer></script>
+  <script type="module" src="comments.min.js"></script>
 </body>
 </html>
 

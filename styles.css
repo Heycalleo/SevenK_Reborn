@@ -1113,17 +1113,121 @@ body.dark .theme-toggle-icon {
 }
 
 /* ---------- 14b. Buku tamu / komentar ---------- */
-.comments-frame {
+.comment-form {
+  display: grid;
+  gap: 1rem;
   margin-top: 1.5rem;
-  padding: 1.25rem 1.4rem;
+  padding: 1.5rem;
   border: 1px solid var(--line);
   border-radius: var(--r-card);
   background: var(--surface);
 }
 
-.comments-frame .utterances {
-  max-width: 100%;
+.comment-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.comment-field label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary-deep);
+}
+
+.comment-field input,
+.comment-field textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-small);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.comment-field textarea {
+  resize: vertical;
+}
+
+.comment-field input:focus,
+.comment-field textarea:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+  border-color: var(--primary);
+}
+
+.comment-field input:disabled,
+.comment-field textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.comment-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.comment-status {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+.comment-status[data-tone='success'] {
+  color: var(--primary-deep);
+  font-weight: 700;
+}
+
+.comment-status[data-tone='error'] {
+  color: #9b3b2f;
+  font-weight: 700;
+}
+
+body.dark .comment-status[data-tone='error'] {
+  color: #f0a898;
+}
+
+.comment-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.comment-item {
+  padding: 1.1rem 1.3rem;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--sunflower);
+  border-radius: var(--r-card);
+  background: var(--surface);
+}
+
+.comment-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.comment-author {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--primary-deep);
+}
+
+.comment-time {
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+}
+
+.comment-body {
   margin: 0;
+  color: var(--ink);
+  line-height: 1.55;
+  word-break: break-word;
 }
 
 /* ---------- 15. Footer ---------- */

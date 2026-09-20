@@ -1,0 +1,40 @@
+ATURAN KEAMANAN FIRESTORE (Firestore Security Rules)
+=====================================================
+
+Salin isi di bawah ke: Firebase Console > Firestore Database > tab "Rules",
+lalu klik "Publish".
+
+Aturan ini membuat:
+- Semua orang boleh MEMBACA komentar.
+- Semua orang boleh MENULIS komentar baru (tidak bisa login).
+- Komentar tidak bisa diubah atau dihapus dari halaman web (hanya kamu,
+  lewat Firebase Console, yang bisa menghapus).
+
+------------------------------------------------------------------
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 40
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 500
+        && request.resource.data.createdAt == request.time;
+      allow update, delete: if false;
+    }
+  }
+}
+------------------------------------------------------------------
+
+Catatan penting:
+- "allow update, delete: if false" berarti orang tidak bisa mengubah atau
+  menghapus komentar lewat website. Untuk menghapus komentar yang tidak
+  pantas, buka Firebase Console > Firestore Database > collection "comments",
+  lalu hapus dokumen yang dimaksud secara manual.
+- Karena tidak ada login, secara teknis seseorang yang paham teknis bisa
+  mengirim banyak komentar (spam). Bila ini menjadi masalah, hubungi saya
+  untuk menambahkan pembatasan tambahan (misalnya reCAPTCHA atau moderasi).
