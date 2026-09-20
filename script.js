@@ -1,3 +1,17 @@
+/* Class Seven K - interaksi halaman.
+   Ikon memakai glyph SVG (Phosphor), bukan emoji.
+   Efek gulir memakai IntersectionObserver + scroll-driven CSS,
+   tanpa window.addEventListener('scroll'). */
+
+const ICONS = {
+  moon: '<svg viewBox="0 0 256 256" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,96.15,96.15,0,1,0,127.8,127.8A8,8,0,0,0,233.54,142.23Z"/></svg>',
+  sun: '<svg viewBox="0 0 256 256" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,128a8,8,0,0,0,8,8h24a8,8,0,0,0,0-16H200A8,8,0,0,0,192,128ZM58.34,186.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM128,192a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V200A8,8,0,0,0,128,192ZM40,128a8,8,0,0,0-8-8H8a8,8,0,0,0,0,16H32A8,8,0,0,0,40,128Z"/></svg>',
+  menu: '<svg viewBox="0 0 256 256" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg>',
+  arrowUp: '<svg viewBox="0 0 256 256" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M205.66,117.66a8,8,0,0,1-11.32,0L136,59.31V216a8,8,0,0,1-16,0V59.31L61.66,117.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0l72,72A8,8,0,0,1,205.66,117.66Z"/></svg>',
+  close: '<svg viewBox="0 0 256 256" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>',
+  download: '<svg viewBox="0 0 256 256" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></svg>'
+};
+
 const menuToggle = document.getElementById('menuToggle');
 const siteNav = document.getElementById('siteNav');
 const detailButtons = document.querySelectorAll('.detail-toggle');
@@ -31,38 +45,41 @@ function setupScrollReveal(scope = document) {
 }
 
 function setupScrollEffects() {
-  const progress = document.createElement('div');
-  progress.className = 'scroll-progress';
-  progress.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(progress);
-
   const backToTop = document.createElement('button');
   backToTop.className = 'back-to-top';
   backToTop.type = 'button';
   backToTop.setAttribute('aria-label', 'Kembali ke atas');
-  backToTop.innerHTML = '<span aria-hidden="true">↑</span>';
+  backToTop.innerHTML = ICONS.arrowUp;
   backToTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
   document.body.appendChild(backToTop);
 
-  let ticking = false;
-  const updateScrollEffects = () => {
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const progressValue = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-    progress.style.transform = `scaleX(${Math.min(Math.max(progressValue, 0), 1)})`;
-    document.body.classList.toggle('has-scrolled', window.scrollY > 18);
-    backToTop.classList.toggle('is-visible', window.scrollY > 420);
-    ticking = false;
+  if (!('IntersectionObserver' in window)) {
+    backToTop.classList.add('is-visible');
+    return;
+  }
+
+  // Sentinel tipis di dua posisi: satu untuk bayangan header saat mulai
+  // menggulir, satu lagi untuk memunculkan tombol kembali ke atas.
+  const makeSentinel = (top) => {
+    const el = document.createElement('div');
+    el.setAttribute('aria-hidden', 'true');
+    el.style.cssText = `position:absolute;top:${top}px;left:0;width:1px;height:1px;pointer-events:none;`;
+    document.body.appendChild(el);
+    return el;
   };
 
-  window.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(updateScrollEffects);
-  }, { passive: true });
+  const headerSentinel = makeSentinel(4);
+  const topSentinel = makeSentinel(480);
 
-  updateScrollEffects();
+  new IntersectionObserver(([entry]) => {
+    document.body.classList.toggle('has-scrolled', !entry.isIntersecting);
+  }).observe(headerSentinel);
+
+  new IntersectionObserver(([entry]) => {
+    backToTop.classList.toggle('is-visible', !entry.isIntersecting);
+  }).observe(topSentinel);
 }
 
 let galleryItems = [];
@@ -120,7 +137,6 @@ function renderGallery() {
     img.alt = `Foto galeri kelas: ${src.split('/').pop()}`;
     img.loading = 'lazy';
     img.decoding = 'async';
-    img.fetchPriority = 'low';
     img.width = 720;
     img.height = 1280;
     img.className = 'gallery-thumb';
@@ -133,7 +149,7 @@ function renderGallery() {
     download.href = resolvedSrc;
     download.download = src.split('/').pop();
     download.className = 'download-btn';
-    download.textContent = 'Download';
+    download.innerHTML = `${ICONS.download}<span>Download</span>`;
     actions.appendChild(download);
 
     card.appendChild(img);
@@ -210,7 +226,7 @@ async function loadGallery() {
     return;
   }
 
-  // Normalisasi: terima format lama (string) dan format baru (objek dengan src + tags)
+  // Normalisasi: terima format lama (string) dan format baru (objek src + tags)
   galleryItems = items.map((entry) => {
     if (typeof entry === 'string') {
       return { src: entry, tags: [] };
@@ -247,17 +263,6 @@ function setupGalleryLoading() {
   galleryObserver.observe(gallery);
 }
 
-function setupHeroAnimationPause() {
-  const hero = document.querySelector('.hero');
-  if (!hero || !('IntersectionObserver' in window)) return;
-
-  const heroObserver = new IntersectionObserver(([entry]) => {
-    hero.classList.toggle('is-offscreen', !entry.isIntersecting);
-  });
-
-  heroObserver.observe(hero);
-}
-
 function openLightbox(src) {
   if (!src) return;
 
@@ -269,8 +274,8 @@ function openLightbox(src) {
     overlay.innerHTML = `
       <div class="lightbox-inner">
         <div class="lightbox-header">
-          <button id="lightboxClose" class="lightbox-close" aria-label="Tutup">✕</button>
-          <a id="lightboxDownload" class="download-btn lightbox-download" href="" download="" aria-label="Download gambar">Download</a>
+          <button id="lightboxClose" class="lightbox-close" aria-label="Tutup">${ICONS.close}</button>
+          <a id="lightboxDownload" class="download-btn lightbox-download" href="" download="" aria-label="Download gambar">${ICONS.download}<span>Download</span></a>
         </div>
         <img id="lightboxImg" src="" alt="Gambar galeri diperbesar" />
       </div>
@@ -331,7 +336,9 @@ function animateStats() {
 }
 
 menuToggle?.addEventListener('click', () => {
-  siteNav?.classList.toggle('open');
+  const open = siteNav?.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', String(Boolean(open)));
+  menuToggle.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
 });
 
 // Dark Mode
@@ -344,13 +351,13 @@ function applyTheme(dark) {
     themeToggle.setAttribute('aria-checked', String(dark));
     themeToggle.setAttribute('aria-label', dark ? 'Ganti ke mode terang' : 'Ganti ke mode gelap');
     const icon = themeToggle.querySelector('.theme-toggle-icon');
-    if (icon) icon.textContent = dark ? '☀️' : '🌙';
+    if (icon) icon.innerHTML = dark ? ICONS.sun : ICONS.moon;
   }
 }
 
 function initTheme() {
   const saved = localStorage.getItem(STORAGE_KEY);
-  const dark = saved === null ? false : saved === 'dark';
+  const dark = saved === 'dark';
   applyTheme(dark);
 }
 
@@ -359,8 +366,6 @@ themeToggle?.addEventListener('click', () => {
   localStorage.setItem(STORAGE_KEY, dark ? 'dark' : 'light');
   applyTheme(dark);
 });
-
-initTheme();
 
 document.querySelectorAll('.site-nav a').forEach((link) => {
   const linkUrl = new URL(link.href, window.location.href);
@@ -371,6 +376,7 @@ document.querySelectorAll('.site-nav a').forEach((link) => {
   link.addEventListener('click', () => {
     if (window.innerWidth <= 720) {
       siteNav?.classList.remove('open');
+      menuToggle?.setAttribute('aria-expanded', 'false');
     }
   });
 });
@@ -379,6 +385,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-current-year]').forEach((year) => {
     year.textContent = String(new Date().getFullYear());
   });
+
+  if (menuToggle && !menuToggle.innerHTML.trim()) {
+    menuToggle.innerHTML = ICONS.menu;
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
 
   const infoAccordion = document.querySelector('.info-accordion details');
   if (infoAccordion && window.innerWidth <= 720) {
@@ -389,7 +400,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScrollEffects();
   animateStats();
   setupGalleryLoading();
-  setupHeroAnimationPause();
 
   const galleryToggle = document.getElementById('galleryToggle');
   const galleryGrid = document.getElementById('galleryGrid');
@@ -409,6 +419,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// Terapkan tema segera supaya tidak ada kedipan saat halaman dibuka.
+initTheme();
 
 detailButtons.forEach((button) => {
   button.addEventListener('click', () => {

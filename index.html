@@ -80,16 +80,16 @@
       <a href="#home" class="brand" aria-label="Kembali ke beranda">
         <div>
           <h1>Class Seven K</h1>
-          <p>Kelas 7K — Kelas paling Dahsyat di spentil</p>
+          <p>Kelas paling dahsyat di Spentil.</p>
         </div>
       </a>
-<button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-label="Ganti mode terang/gelap" aria-checked="false">
+      <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-label="Ganti mode terang/gelap" aria-checked="false">
         <span class="theme-toggle-track">
-          <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+          <span class="theme-toggle-icon" aria-hidden="true"><svg viewBox="0 0 256 256" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,96.15,96.15,0,1,0,127.8,127.8A8,8,0,0,0,233.54,142.23Z"/></svg></span>
           <span class="theme-toggle-thumb" aria-hidden="true"></span>
         </span>
       </button>
-      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu">☰</button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Buka menu" aria-expanded="false"><svg viewBox="0 0 256 256" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></svg></button>
       <div class="nav-pill">
         <nav class="site-nav" id="siteNav" aria-label="Navigasi utama">
           <a href="#home">Beranda</a>
@@ -106,38 +106,38 @@
 
   <main>
     <section class="hero" id="home">
-      <div class="hero-bg"></div>
-      <div class="ghibli-cloud cloud-one" aria-hidden="true"></div>
-      <div class="ghibli-cloud cloud-two" aria-hidden="true"></div>
+      <div class="hero-bg" aria-hidden="true"></div>
 
       <div class="container hero-content">
         <div class="hero-copy">
-          <p class="eyebrow">Class Seven K</p>
-          <h2>WELCOME TO KELAS PALING DAHSYAT</h2>
-          <p>Together we create memories. Website ini menjadi ruang bersama untuk menyimpan jejak, jadwal, kegiatan, dan kenangan terbaik kelas 7K SMP Negeri 3 Luwuk.</p>
-          <div class="hero-stats">
-            <div class="stat-card">
-              <span class="stat-number">29</span>
-              <span class="stat-label">Siswa</span>
-            </div>
+          <h2>Welcome to kelas paling dahsyat</h2>
+          <p class="hero-lede">Together we create memories. Ruang bersama untuk menyimpan jejak, jadwal, kegiatan, dan kenangan terbaik kelas 7K SMP Negeri 3 Luwuk.</p>
+          <div class="hero-buttons">
+            <a href="structure.html" class="button">Lihat Struktur</a>
+            <a href="#gallery" class="button secondary">Buka Galeri</a>
           </div>
-          <div class="hero-actions">
-            <div class="hero-buttons">
-              <a href="structure.html" class="button">Lihat Struktur</a>
-              <a href="Piket.html" class="button secondary">Lihat Jadwal Piket</a>
-              <a href="#gallery" class="button secondary">Buka Galeri</a>
-              <a href="sosmed.html" class="button secondary">Follow akun kami</a>
-            </div>
-            <aside class="quick-info-card">
-              <h3>Apa saja yang ada di website ini?</h3>
-              <ul>
-                <li>Struktur kelas lengkap untuk 7K.</li>
-                <li>Jadwal pelajaran.</li>
-                <li>Galeri foto dan kenang-kenangan.</li>
-                <li>Lokasi Sekolah dan website resmi sekolah.</li>
-              </ul>
-            </aside>
+        </div>
+
+        <figure class="hero-figure">
+          <img src="images/potoklas.jpeg" alt="Foto bersama kelas 7K SMP Negeri 3 Luwuk" width="960" height="1200" fetchpriority="high" />
+        </figure>
+      </div>
+
+      <div class="container">
+        <div class="fact-strip">
+          <div class="stat-card">
+            <span class="stat-number">29</span>
+            <span class="stat-label">Siswa di kelas 7K</span>
           </div>
+          <aside class="quick-info-card">
+            <h3>Apa saja yang ada di website ini?</h3>
+            <ul>
+              <li>Struktur kelas lengkap untuk 7K.</li>
+              <li>Jadwal pelajaran.</li>
+              <li>Galeri foto dan kenang-kenangan.</li>
+              <li>Lokasi Sekolah dan website resmi sekolah.</li>
+            </ul>
+          </aside>
         </div>
       </div>
     </section>
@@ -172,7 +172,7 @@
         <div class="gallery-header">
           <div>
             <h3>Galeri</h3>
-            <p class="section-intro">Galeri Kenangan — waktu boleh berlalu, tapi kenangan akan tetap ada. Di sini kami menyimpan setiap sudut cerita, tawa, dan perjuangan bersama sebagai satu keluarga.</p>
+            <p class="section-intro">Galeri Kenangan. Waktu boleh berlalu, tapi kenangan akan tetap ada. Di sini kami menyimpan setiap sudut cerita, tawa, dan perjuangan bersama sebagai satu keluarga.</p>
           </div>
 <button id="galleryToggle" class="gallery-toggle" aria-expanded="true" type="button">Sembunyikan</button>
         </div>
@@ -195,7 +195,7 @@
             ></iframe>
           </div>
           <div class="location-info">
-            <h3>Lokasi Sekolah — SMP Negeri 3 Luwuk</h3>
+            <h3>Lokasi Sekolah, SMP Negeri 3 Luwuk</h3>
             <p class="address">Jl. Ki Hajar Dewantoro No.10, Karaton, Luwuk, Kabupaten Banggai, Sulawesi Tengah 94711</p>
             <p class="phone">Telepon: (0461) 21276</p>
 <p class="plus-code">Plus code: 2QRQ+HP Karaton, Kabupaten Banggai, Sulawesi Tengah</p>
@@ -253,7 +253,7 @@
         <a href="https://www.instagram.com/classsevenk__spentil7k?igsh=NW9mcGVpam41eGx2" target="_blank" rel="noopener noreferrer">Instagram 7K</a>
         <a href="https://www.instagram.com/smpn_3_luwuk/" target="_blank" rel="noopener noreferrer">SMPN 3 Luwuk</a>
       </div>
-      <p class="footer-copy">#lovespentil💜</p>
+      <p class="footer-copy">#lovespentil <svg viewBox="0 0 256 256" width="12" height="12" fill="currentColor" aria-hidden="true" style="vertical-align:-1px;color:var(--primary)"><path d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32Z"/></svg></p>
       <p class="footer-copy">Made with love by Seven K · <span data-current-year></span></p>
     </div>
   </footer>
