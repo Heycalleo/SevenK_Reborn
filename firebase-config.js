@@ -1,24 +1,17 @@
 // Konfigurasi Firebase untuk fitur Buku Tamu.
 //
-// CARA MENGISI (sekali saja, ±5 menit, gratis):
-// 1. Buka https://console.firebase.google.com/ lalu klik "Add project".
-// 2. Beri nama project, misal "sevenk-komentar", lalu lanjut sampai selesai.
-// 3. Di halaman project, klik ikon Web (</>) untuk menambah aplikasi web.
-// 4. Firebase akan menampilkan objek bernama firebaseConfig.
-// 5. Salin nilainya ke objek di bawah ini (ganti tulisan "GANTI_...").
-// 6. Masuk menu Build > Firestore Database > Create database > pilih mode produksi.
-// 7. Masuk tab Rules, ganti isinya dengan aturan dari file FIRESTORE-RULES.txt.
-//
-// Selama nilai di bawah masih "GANTI_...", form komentar akan menampilkan
-// pesan bahwa Buku Tamu belum dikonfigurasi.
+// Nilai di bawah berasal dari Firebase Console > Project settings > Your apps.
+// Kunci web Firebase memang aman untuk bersifat publik; keamanan data diatur
+// oleh Firestore Security Rules (lihat FIRESTORE-RULES.txt).
 
 export const firebaseConfig = {
-  apiKey: 'GANTI_API_KEY',
-  authDomain: 'GANTI_PROJECT_ID.firebaseapp.com',
-  projectId: 'GANTI_PROJECT_ID',
-  storageBucket: 'GANTI_PROJECT_ID.appspot.com',
-  messagingSenderId: 'GANTI_SENDER_ID',
-  appId: 'GANTI_APP_ID'
+  apiKey: 'AIzaSyAV9EaB2QMwcYOYzNBQxWw4M2Xw-0XRZ18',
+  authDomain: 'sevenk-komentar.firebaseapp.com',
+  projectId: 'sevenk-komentar',
+  storageBucket: 'sevenk-komentar.firebasestorage.app',
+  messagingSenderId: '305583114240',
+  appId: '1:305583114240:web:c20b1b540a44da9046f0e5',
+  measurementId: 'G-0CDX32HTPV'
 };
 
 // True bila config sudah diisi (dipakai untuk menampilkan pesan panduan).
