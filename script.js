@@ -126,27 +126,33 @@ function renderGallery() {
     return;
   }
 
+  const resolveImage = (value) => (
+    value.startsWith('http') || value.startsWith('/') || value.startsWith('./') ? value : `images/${value}`
+  );
+
   filtered.slice(0, visibleGalleryCount).forEach((item) => {
     const src = item.src;
-    const resolvedSrc = src.startsWith('http') || src.startsWith('/') || src.startsWith('./') ? src : `images/${src}`;
+    const fullSrc = resolveImage(src);
+    const thumbSrc = resolveImage(item.thumb || src);
     const card = document.createElement('div');
     card.className = 'gallery-card';
 
     const img = document.createElement('img');
-    img.src = resolvedSrc;
+    // Grid memakai thumbnail kecil agar ringan; lightbox memakai file penuh.
+    img.src = thumbSrc;
     img.alt = `Foto galeri kelas: ${src.split('/').pop()}`;
     img.loading = 'lazy';
     img.decoding = 'async';
-    img.width = 720;
-    img.height = 1280;
+    img.width = 400;
+    img.height = 711;
     img.className = 'gallery-thumb';
-    img.addEventListener('click', () => openLightbox(resolvedSrc));
+    img.addEventListener('click', () => openLightbox(fullSrc));
 
     const actions = document.createElement('div');
     actions.className = 'gallery-actions';
 
     const download = document.createElement('a');
-    download.href = resolvedSrc;
+    download.href = fullSrc;
     download.download = src.split('/').pop();
     download.className = 'download-btn';
     download.innerHTML = `${ICONS.download}<span>Download</span>`;
@@ -226,12 +232,16 @@ async function loadGallery() {
     return;
   }
 
-  // Normalisasi: terima format lama (string) dan format baru (objek src + tags)
+  // Normalisasi: terima format lama (string) dan format baru (objek src + thumb + tags)
   galleryItems = items.map((entry) => {
     if (typeof entry === 'string') {
-      return { src: entry, tags: [] };
+      return { src: entry, thumb: entry, tags: [] };
     }
-    return { src: entry.src || '', tags: Array.isArray(entry.tags) ? entry.tags : [] };
+    return {
+      src: entry.src || '',
+      thumb: entry.thumb || entry.src || '',
+      tags: Array.isArray(entry.tags) ? entry.tags : []
+    };
   }).filter((item) => item.src);
 
   setupGalleryFilters();

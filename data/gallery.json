@@ -1,8 +1,8 @@
 [
-  { "src": "potoklas.jpeg", "tags": ["olahraga"] },
-  { "src": "potoklas2.jpeg", "tags": ["olahraga"] },
-  { "src": "potoklas3.jpeg", "tags": ["olahraga"] },
-  { "src": "potoklas4.jpeg", "tags": ["olahraga"] },
-  { "src": "potoklas5.jpeg", "tags": ["olahraga"] },
-  { "src": "potoklas6.jpeg", "tags": ["olahraga"] }
+  { "src": "potoklas.jpeg", "thumb": "thumbs/potoklas.jpg", "tags": ["olahraga"] },
+  { "src": "potoklas2.jpeg", "thumb": "thumbs/potoklas2.jpg", "tags": ["olahraga"] },
+  { "src": "potoklas3.jpeg", "thumb": "thumbs/potoklas3.jpg", "tags": ["olahraga"] },
+  { "src": "potoklas4.jpeg", "thumb": "thumbs/potoklas4.jpg", "tags": ["olahraga"] },
+  { "src": "potoklas5.jpeg", "thumb": "thumbs/potoklas5.jpg", "tags": ["olahraga"] },
+  { "src": "potoklas6.jpeg", "thumb": "thumbs/potoklas6.jpg", "tags": ["olahraga"] }
 ]
