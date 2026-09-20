@@ -2173,6 +2173,95 @@ body.dark .section h3::after { background: rgba(140, 196, 232, 0.3); }
   body.dark .nav-pill .site-nav a[aria-current='page'] { background: rgba(140, 196, 232, 0.18); color: var(--primary); }
 }
 
+/* Active classroom theme: keep the visual language, remove legacy layout noise. */
+.hero-content {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 760px;
+  margin-left: max(1rem, calc((100% - 1120px) / 2));
+  margin-right: max(1rem, calc((100% - 1120px) / 2));
+}
+
+.hero-copy { max-width: 48rem; }
+
+.hero-actions {
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  max-width: 34rem;
+}
+
+.hero-buttons .button { padding: 0.8rem 1.2rem; }
+
+.quick-info-card {
+  flex: 1 1 16rem;
+  max-width: 22rem;
+}
+
+.page-title {
+  position: relative;
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--text);
+  font-family: 'Bricolage Grotesque', 'DM Sans', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-variation-settings: 'wdth' 92;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+
+.page-title::after {
+  position: absolute;
+  bottom: -0.22rem;
+  left: 0.05rem;
+  z-index: -1;
+  width: min(13rem, 70%);
+  height: 0.48rem;
+  content: '';
+  border-radius: 50% 60% 46% 54%;
+  background: rgba(218, 193, 64, 0.43);
+  transform: rotate(-1.5deg);
+}
+
+.button {
+  background: var(--primary);
+  box-shadow: 0 4px 0 #374c26;
+}
+
+.button.secondary {
+  background: #e7edc9;
+  color: var(--text);
+}
+
+.section-blue { background: #e9efd0; }
+.section-wave { background: rgba(255, 253, 241, 0.8); }
+
+body.dark .section-blue { background: #14232f; }
+body.dark .section-wave { background: rgba(14, 26, 37, 0.8); }
+body.dark .button.secondary { background: rgba(140, 196, 232, 0.14); color: var(--text); }
+
+@media (max-width: 720px) {
+  .hero-content {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .hero-actions,
+  .hero-buttons {
+    width: 100%;
+  }
+
+  .hero-buttons .button,
+  .quick-info-card {
+    max-width: none;
+    width: 100%;
+  }
+}
+
 /* ===== Class VII-K: palet kebun hijau, kertas hangat, bunga matahari ===== */
 :root {
   --bg: #f4f0d8;
