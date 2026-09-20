@@ -1137,6 +1137,16 @@ body.dark .theme-toggle-icon {
   line-height: 1.6;
 }
 
+.footer-contact {
+  max-width: 40rem;
+  margin: 0.5rem auto 1.25rem;
+  text-align: center;
+}
+
+.footer-contact p {
+  margin: 0.2rem 0;
+}
+
 .footer-links {
   display: flex;
   flex-wrap: wrap;
