@@ -1112,6 +1112,20 @@ body.dark .theme-toggle-icon {
   text-transform: uppercase;
 }
 
+/* ---------- 14b. Buku tamu / komentar ---------- */
+.comments-frame {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--surface);
+}
+
+.comments-frame .utterances {
+  max-width: 100%;
+  margin: 0;
+}
+
 /* ---------- 15. Footer ---------- */
 .site-footer {
   padding: 3rem 0 2.5rem;
