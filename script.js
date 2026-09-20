@@ -345,6 +345,25 @@ menuToggle?.addEventListener('click', () => {
 const themeToggle = document.getElementById('themeToggle');
 const STORAGE_KEY = 'sevenk-theme';
 
+function syncCommentsTheme(dark, attempt = 0) {
+  const frame = document.querySelector('iframe.utterances-frame');
+  if (!frame) {
+    // Iframe komentar dimuat belakangan, coba lagi beberapa kali.
+    if (attempt < 8) {
+      window.setTimeout(() => syncCommentsTheme(dark, attempt + 1), 500);
+    }
+    return;
+  }
+  try {
+    frame.contentWindow?.postMessage(
+      { type: 'set-theme', theme: dark ? 'github-dark' : 'github-light' },
+      'https://utteranc.es'
+    );
+  } catch (error) {
+    // Diamkan bila iframe belum siap.
+  }
+}
+
 function applyTheme(dark) {
   document.body.classList.toggle('dark', dark);
   if (themeToggle) {
@@ -353,6 +372,7 @@ function applyTheme(dark) {
     const icon = themeToggle.querySelector('.theme-toggle-icon');
     if (icon) icon.innerHTML = dark ? ICONS.sun : ICONS.moon;
   }
+  syncCommentsTheme(dark);
 }
 
 function initTheme() {
