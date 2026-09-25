@@ -318,6 +318,23 @@ body.has-scrolled .site-header {
   border-radius: var(--r-small);
 }
 
+.brand-logo {
+  flex: 0 0 auto;
+  width: 3.35rem;
+  height: 3.35rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  object-fit: cover;
+  object-position: center;
+  background: var(--surface-soft);
+  box-shadow: var(--shadow-sm);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.brand-copy {
+  min-width: 0;
+}
+
 .brand-title {
   margin: 0;
   font-family: var(--font-display);
@@ -337,6 +354,12 @@ body.has-scrolled .site-header {
 a.brand:hover,
 a.brand:focus-visible {
   opacity: 0.85;
+}
+
+a.brand:hover .brand-logo,
+a.brand:focus-visible .brand-logo {
+  transform: scale(1.04) rotate(-2deg);
+  box-shadow: var(--shadow-md);
 }
 
 .nav-pill {
@@ -1501,6 +1524,20 @@ body.dark .comment-status[data-tone='error'] {
 
   .container {
     width: min(100% - 1.5rem, 1120px);
+  }
+
+  .brand {
+    gap: 0.65rem;
+  }
+
+  .brand-logo {
+    width: 2.85rem;
+    height: 2.85rem;
+    border-radius: 10px;
+  }
+
+  .brand-title {
+    font-size: 0.98rem;
   }
 
   .brand p {
