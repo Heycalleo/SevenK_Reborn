@@ -126,9 +126,10 @@ function renderGallery() {
     return;
   }
 
-  const resolveImage = (value) => (
-    value.startsWith('http') || value.startsWith('/') || value.startsWith('./') ? value : `images/${value}`
-  );
+  const resolveImage = (value) => {
+    if (value.startsWith('http') || value.startsWith('/') || value.startsWith('./')) return value;
+    return value.startsWith('images/') ? value : `images/${value}`;
+  };
 
   filtered.slice(0, visibleGalleryCount).forEach((item) => {
     const src = item.src;
@@ -140,13 +141,19 @@ function renderGallery() {
     const img = document.createElement('img');
     // Grid memakai thumbnail kecil agar ringan; lightbox memakai file penuh.
     img.src = thumbSrc;
-    img.alt = `Foto galeri kelas: ${src.split('/').pop()}`;
+    img.alt = item.alt || `Foto galeri kelas: ${src.split('/').pop()}`;
     img.loading = 'lazy';
     img.decoding = 'async';
-    img.width = 400;
-    img.height = 711;
+    img.width = 225;
+    img.height = 400;
     img.className = 'gallery-thumb';
-    img.addEventListener('click', () => openLightbox(fullSrc));
+
+    const openButton = document.createElement('button');
+    openButton.type = 'button';
+    openButton.className = 'gallery-open';
+    openButton.setAttribute('aria-label', `Perbesar foto: ${img.alt}`);
+    openButton.appendChild(img);
+    openButton.addEventListener('click', () => openLightbox(fullSrc, img.alt, src.split('/').pop(), openButton));
 
     const actions = document.createElement('div');
     actions.className = 'gallery-actions';
@@ -158,7 +165,7 @@ function renderGallery() {
     download.innerHTML = `${ICONS.download}<span>Download</span>`;
     actions.appendChild(download);
 
-    card.appendChild(img);
+    card.appendChild(openButton);
     card.appendChild(actions);
     grid.appendChild(card);
   });
@@ -232,15 +239,16 @@ async function loadGallery() {
     return;
   }
 
-  // Normalisasi: terima format lama (string) dan format baru (objek src + thumb + tags)
+  // Normalisasi: terima format lama (string) dan format baru (objek src + thumb + tags + alt)
   galleryItems = items.map((entry) => {
     if (typeof entry === 'string') {
-      return { src: entry, thumb: entry, tags: [] };
+      return { src: entry, thumb: entry, tags: [], alt: '' };
     }
     return {
       src: entry.src || '',
       thumb: entry.thumb || entry.src || '',
-      tags: Array.isArray(entry.tags) ? entry.tags : []
+      tags: Array.isArray(entry.tags) ? entry.tags : [],
+      alt: entry.alt || ''
     };
   }).filter((item) => item.src);
 
@@ -273,7 +281,13 @@ function setupGalleryLoading() {
   galleryObserver.observe(gallery);
 }
 
-function openLightbox(src) {
+function getFocusableElements(container) {
+  return Array.from(container.querySelectorAll(
+    'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  ));
+}
+
+function openLightbox(src, alt = '', filename = '', trigger = null) {
   if (!src) return;
 
   let overlay = document.getElementById('lightboxOverlay');
@@ -281,26 +295,56 @@ function openLightbox(src) {
     overlay = document.createElement('div');
     overlay.id = 'lightboxOverlay';
     overlay.className = 'lightbox';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'lightboxTitle');
     overlay.innerHTML = `
-      <div class="lightbox-inner">
+      <div class="lightbox-inner" tabindex="-1">
+        <h2 class="sr-only" id="lightboxTitle">Pratinjau foto galeri</h2>
         <div class="lightbox-header">
-          <button id="lightboxClose" class="lightbox-close" aria-label="Tutup">${ICONS.close}</button>
+          <button id="lightboxClose" class="lightbox-close" aria-label="Tutup pratinjau foto">${ICONS.close}</button>
           <a id="lightboxDownload" class="download-btn lightbox-download" href="" download="" aria-label="Download gambar">${ICONS.download}<span>Download</span></a>
         </div>
-        <img id="lightboxImg" src="" alt="Gambar galeri diperbesar" />
+        <img id="lightboxImg" src="" alt="" />
       </div>
     `;
     document.body.appendChild(overlay);
 
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay || e.target.id === 'lightboxClose') {
-        overlay.classList.remove('open');
+    const closeLightbox = () => {
+      if (!overlay.classList.contains('open')) return;
+      overlay.classList.remove('open');
+      document.body.classList.remove('lightbox-open');
+      const opener = overlay.returnFocus;
+      overlay.returnFocus = null;
+      if (opener && typeof opener.focus === 'function') opener.focus();
+    };
+
+    overlay.addEventListener('click', (event) => {
+      if (event.target === overlay || event.target.closest('#lightboxClose')) {
+        closeLightbox();
       }
     });
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && overlay.classList.contains('open')) {
-        overlay.classList.remove('open');
+      if (!overlay.classList.contains('open')) return;
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeLightbox();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+      const focusable = getFocusableElements(overlay);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     });
   }
@@ -309,13 +353,18 @@ function openLightbox(src) {
   const download = overlay.querySelector('#lightboxDownload');
   if (img) {
     img.src = src;
+    img.alt = alt || 'Foto galeri kelas';
   }
   if (download) {
     download.href = src;
-    download.download = src.split('/').pop();
+    download.download = filename || src.split('/').pop();
+    download.setAttribute('aria-label', `Download ${alt || 'foto galeri kelas'}`);
   }
 
+  overlay.returnFocus = trigger || document.activeElement;
+  document.body.classList.add('lightbox-open');
   overlay.classList.add('open');
+  overlay.querySelector('.lightbox-inner')?.focus();
 }
 
 function animateStats() {
@@ -345,11 +394,47 @@ function animateStats() {
   });
 }
 
+const mobileMenuQuery = window.matchMedia('(max-width: 900px)');
+
+function setMenuState(open = false) {
+  if (!menuToggle || !siteNav) return;
+
+  const isMobile = mobileMenuQuery.matches;
+  const shouldOpen = isMobile && open;
+  siteNav.classList.toggle('open', shouldOpen);
+  siteNav.setAttribute('aria-hidden', String(isMobile ? !shouldOpen : false));
+  if ('inert' in siteNav) siteNav.inert = isMobile && !shouldOpen;
+
+  menuToggle.setAttribute('aria-expanded', String(shouldOpen));
+  menuToggle.setAttribute('aria-label', shouldOpen ? 'Tutup menu' : 'Buka menu');
+  menuToggle.innerHTML = shouldOpen ? ICONS.close : ICONS.menu;
+}
+
 menuToggle?.addEventListener('click', () => {
-  const open = siteNav?.classList.toggle('open');
-  menuToggle.setAttribute('aria-expanded', String(Boolean(open)));
-  menuToggle.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+  if (!siteNav) return;
+  setMenuState(!siteNav.classList.contains('open'));
 });
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape' || !siteNav?.classList.contains('open')) return;
+  setMenuState(false);
+  menuToggle?.focus();
+});
+
+document.addEventListener('click', (event) => {
+  if (!mobileMenuQuery.matches || !siteNav?.classList.contains('open')) return;
+  const header = menuToggle.closest('.header-inner');
+  if (header && !header.contains(event.target)) setMenuState(false);
+});
+
+const handleMenuBreakpoint = () => setMenuState(false);
+if (typeof mobileMenuQuery.addEventListener === 'function') {
+  mobileMenuQuery.addEventListener('change', handleMenuBreakpoint);
+} else if (typeof mobileMenuQuery.addListener === 'function') {
+  mobileMenuQuery.addListener(handleMenuBreakpoint);
+}
+
+setMenuState(false);
 
 // Dark Mode
 const themeToggle = document.getElementById('themeToggle');
@@ -357,6 +442,7 @@ const STORAGE_KEY = 'sevenk-theme';
 
 function applyTheme(dark) {
   document.body.classList.toggle('dark', dark);
+  document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
   if (themeToggle) {
     themeToggle.setAttribute('aria-checked', String(dark));
     themeToggle.setAttribute('aria-label', dark ? 'Ganti ke mode terang' : 'Ganti ke mode gelap');
@@ -365,15 +451,32 @@ function applyTheme(dark) {
   }
 }
 
+function readSavedTheme() {
+  try {
+    return localStorage.getItem(STORAGE_KEY);
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveTheme(theme) {
+  try {
+    localStorage.setItem(STORAGE_KEY, theme);
+  } catch (error) {
+    // Tema tetap berfungsi di sesi ini jika storage browser dibatasi.
+  }
+}
+
 function initTheme() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  const dark = saved === 'dark';
+  const saved = readSavedTheme();
+  const systemPrefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
+  const dark = saved === 'dark' || (!saved && systemPrefersDark);
   applyTheme(dark);
 }
 
 themeToggle?.addEventListener('click', () => {
   const dark = document.body.classList.toggle('dark');
-  localStorage.setItem(STORAGE_KEY, dark ? 'dark' : 'light');
+  saveTheme(dark ? 'dark' : 'light');
   applyTheme(dark);
 });
 
@@ -384,9 +487,8 @@ document.querySelectorAll('.site-nav a').forEach((link) => {
   if (isCurrentPage) link.setAttribute('aria-current', 'page');
 
   link.addEventListener('click', () => {
-    if (window.innerWidth <= 720) {
-      siteNav?.classList.remove('open');
-      menuToggle?.setAttribute('aria-expanded', 'false');
+    if (mobileMenuQuery.matches) {
+      setMenuState(false);
     }
   });
 });
@@ -402,7 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const infoAccordion = document.querySelector('.info-accordion details');
-  if (infoAccordion && window.innerWidth <= 720) {
+  if (infoAccordion && window.innerWidth <= 900) {
     infoAccordion.open = false;
   }
 

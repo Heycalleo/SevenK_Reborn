@@ -1,8 +1,13 @@
-Letakkan gambar dekorasi laut di folder ini.
+Folder ini berisi foto galeri kelas 7K.
 
-Contoh gambar demo yang sudah disediakan:
-- ocean-1.svg
-- ocean-2.svg
-- ocean-3.svg
+- File utama: potoklas.jpeg, potoklas2.jpeg, dan seterusnya.
+- Thumbnail: thumbs/nama-file.jpg.
+- Ukuran thumbnail saat ini: 225 × 400 piksel.
+- Ukuran foto utama saat ini: 720 × 1280 piksel.
 
-Untuk mengganti galeri, taruh file gambar (jpg/png/svg) di folder ini lalu ubah referensi di `index.html` atau beri tahu saya supaya saya perbarui otomatis.
+Untuk memperbarui galeri, jalankan:
+    python scripts/generate_gallery.py
+
+Generator hanya memasukkan foto yang namanya diawali "potoklas", lalu memakai
+thumbnail dengan nama yang sama jika file thumbnail tersedia.
+

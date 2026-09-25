@@ -1,8 +1,50 @@
 [
-  { "src": "potoklas.jpeg", "thumb": "thumbs/potoklas.jpg", "tags": ["olahraga"] },
-  { "src": "potoklas2.jpeg", "thumb": "thumbs/potoklas2.jpg", "tags": ["olahraga"] },
-  { "src": "potoklas3.jpeg", "thumb": "thumbs/potoklas3.jpg", "tags": ["olahraga"] },
-  { "src": "potoklas4.jpeg", "thumb": "thumbs/potoklas4.jpg", "tags": ["olahraga"] },
-  { "src": "potoklas5.jpeg", "thumb": "thumbs/potoklas5.jpg", "tags": ["olahraga"] },
-  { "src": "potoklas6.jpeg", "thumb": "thumbs/potoklas6.jpg", "tags": ["olahraga"] }
+  {
+    "src": "images/potoklas.jpeg",
+    "thumb": "images/thumbs/potoklas.jpg",
+    "tags": [
+      "bersama"
+    ],
+    "alt": "Foto bersama kelas 7K di SMP Negeri 3 Luwuk"
+  },
+  {
+    "src": "images/potoklas2.jpeg",
+    "thumb": "images/thumbs/potoklas2.jpg",
+    "tags": [
+      "bersama"
+    ],
+    "alt": "Foto bersama kelas 7K di SMP Negeri 3 Luwuk"
+  },
+  {
+    "src": "images/potoklas3.jpeg",
+    "thumb": "images/thumbs/potoklas3.jpg",
+    "tags": [
+      "bersama"
+    ],
+    "alt": "Foto bersama kelas 7K di SMP Negeri 3 Luwuk"
+  },
+  {
+    "src": "images/potoklas4.jpeg",
+    "thumb": "images/thumbs/potoklas4.jpg",
+    "tags": [
+      "bersama"
+    ],
+    "alt": "Foto bersama kelas 7K di SMP Negeri 3 Luwuk"
+  },
+  {
+    "src": "images/potoklas5.jpeg",
+    "thumb": "images/thumbs/potoklas5.jpg",
+    "tags": [
+      "bersama"
+    ],
+    "alt": "Foto bersama kelas 7K di SMP Negeri 3 Luwuk"
+  },
+  {
+    "src": "images/potoklas6.jpeg",
+    "thumb": "images/thumbs/potoklas6.jpg",
+    "tags": [
+      "bersama"
+    ],
+    "alt": "Foto bersama kelas 7K di SMP Negeri 3 Luwuk"
+  }
 ]
