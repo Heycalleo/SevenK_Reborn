@@ -6,21 +6,22 @@
 
 /* ---------- 1. Token ---------- */
 :root {
-  --paper: #f5f1dd;
-  --paper-deep: #e6ecc6;
-  --surface: #fffdf3;
-  --surface-soft: #e9edcd;
-  --ink: #293a22;
-  --ink-muted: #5f6b45;
-  --line: rgba(82, 109, 54, 0.16);
-  --line-strong: rgba(82, 109, 54, 0.32);
+  /* Palet diambil dari logo: hijau hutan, krem kertas, kuning bunga matahari. */
+  --paper: #f2f1e0;
+  --paper-deep: #e4e6cc;
+  --surface: #fbf9ec;
+  --surface-soft: #e6ead0;
+  --ink: #232c14;
+  --ink-muted: #55603a;
+  --line: rgba(63, 74, 30, 0.16);
+  --line-strong: rgba(63, 74, 30, 0.34);
 
-  --primary: #526d36;
-  --primary-deep: #3f5628;
-  --accent: #aebc68;
-  --sunflower: #e0c652;
-  --sunflower-soft: #efe4a6;
-  --on-primary: #fffdf3;
+  --primary: #4a5a1f;
+  --primary-deep: #333f14;
+  --accent: #7a8c3a;
+  --sunflower: #f0c11c;
+  --sunflower-soft: #f7e9a8;
+  --on-primary: #fbf9ec;
 
   --r-pill: 999px;
   --r-card: 16px;
@@ -37,20 +38,20 @@
 }
 
 body.dark {
-  --paper: #172318;
-  --paper-deep: #1d2c1d;
-  --surface: #203220;
-  --surface-soft: #2c4128;
-  --ink: #edf0d2;
-  --ink-muted: #b6c29c;
-  --line: rgba(210, 220, 116, 0.16);
-  --line-strong: rgba(210, 220, 116, 0.3);
-  --primary: #d1d874;
-  --primary-deep: #e4ea9e;
-  --accent: #8ca65d;
-  --sunflower: #d8c85a;
-  --sunflower-soft: #46451d;
-  --on-primary: #172318;
+  --paper: #14180d;
+  --paper-deep: #1b2011;
+  --surface: #1e2413;
+  --surface-soft: #2a321a;
+  --ink: #eef0dc;
+  --ink-muted: #b0b894;
+  --line: rgba(238, 240, 220, 0.14);
+  --line-strong: rgba(238, 240, 220, 0.3);
+  --primary: #a8bd5a;
+  --primary-deep: #c3d47f;
+  --accent: #7f9440;
+  --sunflower: #f0c11c;
+  --sunflower-soft: #4a4415;
+  --on-primary: #14180d;
   --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 16px 34px rgba(0, 0, 0, 0.36);
 }
@@ -74,12 +75,11 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   color: var(--ink);
-  background: linear-gradient(170deg, #fffdf3 0%, var(--paper) 60%, var(--paper-deep) 100%);
-  background-attachment: fixed;
+  background: var(--paper);
 }
 
 body.dark {
-  background: linear-gradient(170deg, #172318 0%, #1b2a1b 60%, #22331f 100%);
+  background: var(--paper);
 }
 
 img {
@@ -288,9 +288,7 @@ h4 {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--surface);
   border-bottom: 1px solid var(--line);
   transition: box-shadow 200ms ease, background 200ms ease;
 }
@@ -456,7 +454,7 @@ a.brand:focus-visible .brand-logo {
   height: 1.42rem;
   border-radius: 50%;
   background: var(--surface);
-  box-shadow: 0 1px 4px rgba(41, 58, 34, 0.3);
+  box-shadow: 0 1px 4px rgba(35, 44, 20, 0.3);
   transition: transform 220ms cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
@@ -488,12 +486,7 @@ body.dark .theme-toggle-icon {
 }
 
 .hero-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 12% 22%, rgba(174, 188, 104, 0.4), transparent 30%),
-    radial-gradient(circle at 88% 78%, rgba(224, 198, 82, 0.28), transparent 26%);
+  display: none;
 }
 
 .hero-content {
@@ -646,12 +639,12 @@ body.dark .theme-toggle-icon {
 }
 
 .section-wave {
-  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  background: var(--surface);
   border-block: 1px solid var(--line);
 }
 
 .section-location {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 60%, transparent), var(--paper-deep));
+  background: var(--paper-deep);
 }
 
 .grid-2 {
@@ -671,7 +664,7 @@ body.dark .theme-toggle-icon {
   margin: 1.5rem 0;
   border: 1px solid var(--line-strong);
   border-radius: var(--r-card);
-  background: linear-gradient(135deg, var(--surface-soft), var(--sunflower-soft));
+  background: var(--surface-soft);
 }
 
 .highlight-card span {
@@ -836,7 +829,7 @@ body.dark .theme-toggle-icon {
   display: grid;
   place-items: center;
   padding: 1.5rem;
-  background: rgba(23, 35, 24, 0.86);
+  background: rgba(20, 24, 13, 0.9);
   opacity: 0;
   pointer-events: none;
   transition: opacity 220ms ease;
@@ -886,8 +879,8 @@ body.lightbox-open {
   padding: 0;
   border: none;
   border-radius: var(--r-pill);
-  background: rgba(255, 253, 243, 0.95);
-  color: #293a22;
+  background: var(--surface);
+  color: var(--ink);
   font-size: 1rem;
   cursor: pointer;
 }
@@ -1071,10 +1064,10 @@ body.lightbox-open {
   font-weight: 700;
 }
 
-.structure-card:nth-child(4n + 1) { --role-color: #778e46; }
-.structure-card:nth-child(4n + 2) { --role-color: #b3a94d; }
-.structure-card:nth-child(4n + 3) { --role-color: #658c58; }
-.structure-card:nth-child(4n) { --role-color: #9b9d51; }
+.structure-card:nth-child(4n + 1) { --role-color: #4a5a1f; }
+.structure-card:nth-child(4n + 2) { --role-color: #7a8c3a; }
+.structure-card:nth-child(4n + 3) { --role-color: #f0c11c; }
+.structure-card:nth-child(4n) { --role-color: #55603a; }
 
 /* ---------- 13. Jadwal & piket ---------- */
 .schedule-grid {
@@ -1349,7 +1342,7 @@ body.dark .comment-status[data-tone='error'] {
   padding: 3rem 0 2.5rem;
   text-align: center;
   border-top: 1px solid var(--line);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--surface-soft) 60%, transparent), transparent);
+  background: var(--surface-soft);
   color: var(--ink-muted);
 }
 
@@ -1418,7 +1411,7 @@ body.dark .comment-status[data-tone='error'] {
   width: 100%;
   height: 3px;
   pointer-events: none;
-  background: linear-gradient(90deg, var(--sunflower), var(--primary), var(--accent));
+  background: var(--primary);
   transform: scaleX(0);
   transform-origin: left;
   animation: progress-grow linear;
@@ -1729,11 +1722,11 @@ body.dark .comment-status[data-tone='error'] {
 
 /* Dark-mode finishing: pastikan teks & permukaan tetap kontras */
 body.dark .site-header {
-  background: color-mix(in srgb, #172318 92%, transparent);
+  background: var(--surface);
 }
 
 body.dark .highlight-card {
-  background: linear-gradient(135deg, #2a4026, #344d2a);
+  background: var(--surface-soft);
 }
 
 body.dark .button.secondary {
