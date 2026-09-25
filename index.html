@@ -75,7 +75,9 @@
   <link rel="icon" href="images/logo-kelas-favicon.jpg" type="image/jpeg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="images/logokelas-logo.jpg" fetchpriority="high" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,92,500;12..96,92,700;12..96,92,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,92,500;12..96,92,700;12..96,92,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet"></noscript>
   <link rel="preload" as="image" href="images/potoklas.jpeg" fetchpriority="high" />
   <link rel="stylesheet" href="styles.css?v=20260926-flat-palette" />
 </head>
@@ -84,7 +86,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="#home" class="brand" aria-label="Kembali ke beranda">
-        <img class="brand-logo" src="images/logokelas.jpeg" alt="Logo Kelas 7K" width="1080" height="1080" />
+        <img class="brand-logo" src="images/logokelas-logo.jpg" alt="Logo Kelas 7K" width="160" height="160" />
         <div class="brand-copy">
           <p class="brand-title">Class Seven K</p>
           <p>Kelas paling dahsyat di Spentil.</p>
@@ -127,7 +129,7 @@
         </div>
 
         <figure class="hero-figure">
-          <img src="images/potoklas.jpeg" alt="Foto bersama kelas 7K SMP Negeri 3 Luwuk" width="720" height="1280" fetchpriority="high" sizes="(max-width: 900px) calc(100vw - 2rem), 520px" />
+          <img src="images/potoklas.jpeg" srcset="images/potoklas-480.jpg 480w, images/potoklas.jpeg 720w" sizes="(max-width: 900px) calc(100vw - 2rem), 520px" alt="Foto bersama kelas 7K SMP Negeri 3 Luwuk" width="720" height="1280" fetchpriority="high" decoding="async" />
         </figure>
       </div>
 
@@ -266,6 +268,7 @@
               src="https://www.google.com/maps?q=SMP%20Negeri%203%20Luwuk%20Jl.%20Ki%20Hajar%20Dewantoro%20No.10%20Karaton%20Luwuk&output=embed"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
+              title="Peta Lokasi SMP Negeri 3 Luwuk"
             ></iframe>
           </div>
           <div class="location-info">
