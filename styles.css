@@ -344,7 +344,7 @@ body.has-scrolled .site-header {
   line-height: 1.2;
 }
 
-.brand p {
+.brand-copy > p:not(.brand-title) {
   margin: 0.15rem 0 0;
   color: var(--ink-muted);
   font-size: 0.78rem;
@@ -1527,28 +1527,45 @@ body.dark .comment-status[data-tone='error'] {
   }
 
   .brand {
-    gap: 0.65rem;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 0.6rem;
   }
 
   .brand-logo {
-    width: 2.85rem;
-    height: 2.85rem;
+    width: 2.65rem;
+    height: 2.65rem;
     border-radius: 10px;
   }
 
-  .brand-title {
-    font-size: 0.98rem;
+  .brand-copy {
+    min-width: 0;
   }
 
-  .brand p {
+  .brand-title {
+    overflow: hidden;
+    font-size: 0.9rem;
+    line-height: 1.15;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .brand-copy > p:not(.brand-title) {
     display: none;
+  }
+
+  .theme-toggle,
+  .menu-toggle {
+    order: 3;
   }
 
   .menu-toggle {
     display: inline-flex;
+    margin-left: -0.35rem;
   }
 
   .nav-pill {
+    order: 4;
     position: absolute;
     top: calc(100% + 0.65rem);
     left: 0;
