@@ -420,6 +420,26 @@ a.brand:focus-visible .brand-logo {
   height: 1.35rem;
 }
 
+/* Kedua ikon sudah ada di DOM dan hanya visibilitasnya yang ditukar,
+   supaya elemen yang sedang diklik tidak ikut terlepas dari DOM. */
+.menu-toggle .menu-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-toggle .menu-icon-open {
+  display: inline-flex;
+}
+
+.menu-toggle.is-open .menu-icon-open {
+  display: none;
+}
+
+.menu-toggle.is-open .menu-icon-close {
+  display: inline-flex;
+}
+
 /* Saklar dark mode */
 .theme-toggle {
   display: inline-flex;

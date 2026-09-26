@@ -396,8 +396,21 @@ function animateStats() {
 
 const mobileMenuQuery = window.matchMedia('(max-width: 900px)');
 
+// Ikon menu dan tutup dipasang sekali di awal, lalu hanya ditukar lewat
+// kelas .is-open. Kalau innerHTML diganti setiap klik, elemen yang sedang
+// disentuh user menjadi lepas dari DOM, sehingga pengecekan "klik di luar
+// header" salah menilai dan menu yang baru terbuka langsung tertutup lagi.
+function initMenuIcons() {
+  if (!menuToggle || menuToggle.dataset.iconsReady) return;
+  menuToggle.innerHTML =
+    `<span class="menu-icon menu-icon-open" aria-hidden="true">${ICONS.menu}</span>` +
+    `<span class="menu-icon menu-icon-close" aria-hidden="true">${ICONS.close}</span>`;
+  menuToggle.dataset.iconsReady = 'true';
+}
+
 function setMenuState(open = false) {
   if (!menuToggle || !siteNav) return;
+  initMenuIcons();
 
   const isMobile = mobileMenuQuery.matches;
   const shouldOpen = isMobile && open;
@@ -407,7 +420,7 @@ function setMenuState(open = false) {
 
   menuToggle.setAttribute('aria-expanded', String(shouldOpen));
   menuToggle.setAttribute('aria-label', shouldOpen ? 'Tutup menu' : 'Buka menu');
-  menuToggle.innerHTML = shouldOpen ? ICONS.close : ICONS.menu;
+  menuToggle.classList.toggle('is-open', shouldOpen);
 }
 
 menuToggle?.addEventListener('click', () => {
@@ -424,7 +437,12 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('click', (event) => {
   if (!mobileMenuQuery.matches || !siteNav?.classList.contains('open')) return;
   const header = menuToggle.closest('.header-inner');
-  if (header && !header.contains(event.target)) setMenuState(false);
+  if (!header) return;
+  // composedPath dipakai sebagai cadangan: jalur event sudah dihitung saat
+  // klik, jadi tetap benar walau ada elemen yang sudah dilepas dari DOM.
+  const path = typeof event.composedPath === 'function' ? event.composedPath() : [];
+  const insideHeader = header.contains(event.target) || path.includes(header);
+  if (!insideHeader) setMenuState(false);
 });
 
 const handleMenuBreakpoint = () => setMenuState(false);
@@ -498,8 +516,8 @@ document.addEventListener('DOMContentLoaded', () => {
     year.textContent = String(new Date().getFullYear());
   });
 
-  if (menuToggle && !menuToggle.innerHTML.trim()) {
-    menuToggle.innerHTML = ICONS.menu;
+  if (menuToggle) {
+    initMenuIcons();
     menuToggle.setAttribute('aria-expanded', 'false');
   }
 
