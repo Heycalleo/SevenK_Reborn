@@ -454,6 +454,45 @@ if (typeof mobileMenuQuery.addEventListener === 'function') {
 
 setMenuState(false);
 
+// ---------- Jadwal piket ----------
+// Halaman Piket.html memuat satu kartu per hari. Nama petugas ditulis
+// langsung di dalam <li>, jadi skrip ini hanya menghitung isinya dan
+// menandai kartu hari ini supaya mudah dicek sebelum berangkat.
+const DAY_NAMES = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+function setupPiketSchedule() {
+  const grid = document.getElementById('piketGrid');
+  if (!grid) return;
+
+  const today = DAY_NAMES[new Date().getDay()];
+
+  grid.querySelectorAll('.schedule-card[data-day]').forEach((card) => {
+    const slots = Array.from(card.querySelectorAll('.picket-list > li'));
+    const filled = slots.filter((slot) => slot.textContent.trim() !== '').length;
+
+    const counter = card.querySelector('[data-piket-count]');
+    if (counter) {
+      counter.textContent = filled
+        ? `${filled} dari ${slots.length} petugas`
+        : 'Belum diisi';
+    }
+
+    // Kartu yang seluruh slotnya kosong ditandai agar mudah dikenali.
+    card.classList.toggle('is-empty', filled === 0);
+
+    if (card.dataset.day !== today) return;
+
+    card.classList.add('is-today');
+    const meta = card.querySelector('.schedule-meta');
+    if (meta && !meta.querySelector('.piket-today-tag')) {
+      const tag = document.createElement('span');
+      tag.className = 'piket-today-tag';
+      tag.textContent = 'Hari ini';
+      meta.appendChild(tag);
+    }
+  });
+}
+
 // Dark Mode
 const themeToggle = document.getElementById('themeToggle');
 const STORAGE_KEY = 'sevenk-theme';
@@ -530,6 +569,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupScrollEffects();
   animateStats();
   setupGalleryLoading();
+  setupPiketSchedule();
 
   const galleryToggle = document.getElementById('galleryToggle');
   const galleryGrid = document.getElementById('galleryGrid');

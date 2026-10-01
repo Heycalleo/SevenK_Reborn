@@ -1187,6 +1187,59 @@ body.lightbox-open {
   padding: 1.4rem;
 }
 
+/* Slot nama yang belum diisi: <li></li> tetap kelihatan sebagai kolom
+   yang siap diisi, bukan kotak kosong yang membingungkan. */
+.picket-list li:empty {
+  min-height: 2.6rem;
+}
+
+.picket-list li:empty::after {
+  content: "Isi nama petugas";
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.schedule-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Catatan: .schedule-day span juga menata font 1.3rem, jadi selektor tag
+   harus lebih spesifik agar label "Hari ini" tetap kecil. */
+.schedule-day .piket-today-tag {
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--r-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.schedule-day .piket-today-tag[hidden] {
+  display: none;
+}
+
+.schedule-card.is-today {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.schedule-card.is-today .schedule-day {
+  background: var(--surface-soft);
+}
+
+/* Kartu yang belum punya nama petugas sama sekali. */
+.schedule-card.is-empty .picket-list {
+  opacity: 0.72;
+}
+
 .schedule-status-title {
   margin: 0;
   color: var(--primary-deep);
