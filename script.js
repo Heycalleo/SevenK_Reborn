@@ -228,7 +228,7 @@ async function loadGallery() {
   try {
     // Data galeri boleh memakai cache browser; tidak perlu diunduh ulang pada
     // setiap kunjungan halaman.
-    const res = await fetch('data/gallery.json?v=20261002-batik');
+    const res = await fetch('data/gallery.json?v=20261002-olahraga');
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data)) items = data;

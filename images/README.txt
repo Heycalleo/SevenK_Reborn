@@ -1,6 +1,6 @@
 Folder ini berisi foto galeri kelas 7K.
 
-- Foto potret bersama: potoklas.jpeg, potoklas2.jpeg, dan seterusnya.
+- Foto potret olahraga: potoklas.jpeg, potoklas2.jpeg, dan seterusnya.
 - Foto Hari Batik (landscape 16:9): haribatik1.jpeg, dan seterusnya.
 - Thumbnail: thumbs/nama-file.jpg.
 - Ukuran thumbnail foto potret: 225 × 400 piksel.

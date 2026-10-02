@@ -17,7 +17,7 @@ OUT_FILE = os.path.join(ROOT, "data", "gallery.json")
 GROUPS = [
     (
         re.compile(r"^potoklas\d*\.(?:jpg|jpeg|png|webp)$", re.IGNORECASE),
-        ["bersama"],
+        ["olahraga"],
         "Foto bersama kelas 7K di SMP Negeri 3 Luwuk",
         False,
     ),
