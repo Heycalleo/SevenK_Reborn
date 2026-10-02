@@ -85,7 +85,7 @@ function setupScrollEffects() {
 let galleryItems = [];
 let activeFilter = 'all';
 let galleryLoaded = false;
-const GALLERY_BATCH_SIZE = 2;
+const GALLERY_BATCH_SIZE = 6;
 let visibleGalleryCount = GALLERY_BATCH_SIZE;
 
 function getGalleryMoreButton() {
@@ -144,9 +144,12 @@ function renderGallery() {
     img.alt = item.alt || `Foto galeri kelas: ${src.split('/').pop()}`;
     img.loading = 'lazy';
     img.decoding = 'async';
-    img.width = 225;
-    img.height = 400;
-    img.className = 'gallery-thumb';
+    // Foto potret dipotong seragam, sedangkan foto landscape (Hari Batik)
+    // memakai rasio sendiri supaya tidak ada siswa yang terpotong.
+    const isWide = Boolean(item.wide);
+    img.className = isWide ? 'gallery-thumb is-wide' : 'gallery-thumb';
+    img.width = isWide ? 1280 : 225;
+    img.height = isWide ? 720 : 400;
 
     const openButton = document.createElement('button');
     openButton.type = 'button';
@@ -225,7 +228,7 @@ async function loadGallery() {
   try {
     // Data galeri boleh memakai cache browser; tidak perlu diunduh ulang pada
     // setiap kunjungan halaman.
-    const res = await fetch('data/gallery.json');
+    const res = await fetch('data/gallery.json?v=20261002-batik');
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data)) items = data;
@@ -242,13 +245,14 @@ async function loadGallery() {
   // Normalisasi: terima format lama (string) dan format baru (objek src + thumb + tags + alt)
   galleryItems = items.map((entry) => {
     if (typeof entry === 'string') {
-      return { src: entry, thumb: entry, tags: [], alt: '' };
+      return { src: entry, thumb: entry, tags: [], alt: '', wide: false };
     }
     return {
       src: entry.src || '',
       thumb: entry.thumb || entry.src || '',
       tags: Array.isArray(entry.tags) ? entry.tags : [],
-      alt: entry.alt || ''
+      alt: entry.alt || '',
+      wide: Boolean(entry.wide)
     };
   }).filter((item) => item.src);
 

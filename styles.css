@@ -780,7 +780,8 @@ body.dark .theme-toggle-icon {
 }
 
 .gallery-card {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
   padding: 0.75rem;
   border: 1px solid var(--line);
@@ -803,6 +804,13 @@ body.dark .theme-toggle-icon {
   object-fit: cover;
   border-radius: var(--r-small);
   transition: transform 220ms ease;
+}
+
+/* Foto landscape (Hari Batik) memakai rasio 16:9 penuh, bukan dipotong,
+   supaya siswa di ujung barisan tetap terlihat. */
+.gallery-thumb.is-wide {
+  height: auto;
+  aspect-ratio: 16 / 9;
 }
 
 .gallery-open {
@@ -829,6 +837,9 @@ body.dark .theme-toggle-icon {
 .gallery-actions {
   display: flex;
   justify-content: center;
+  /* Foto landscape lebih pendek dari foto potret, jadi tombol download
+     tetap menempel di dasar kartu. */
+  margin-top: auto;
 }
 
 .gallery-more {
